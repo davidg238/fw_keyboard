@@ -1,0 +1,12 @@
+name: fw_keyboard
+
+prefixes:
+  color_tft: toit-color-tft
+  pixel_display: toit-pixel-display
+dependencies:
+  toit-color-tft:
+    url: github.com/toitware/toit-color-tft
+    version: 1.0.0
+  toit-pixel-display:
+    url: github.com/toitware/toit-pixel-display
+    version: 1.1.0
