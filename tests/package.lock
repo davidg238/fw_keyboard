@@ -1,14 +1,8 @@
 prefixes:
-  fw_keyboard: ..
   events: ..
-  color_tft: toit-color-tft
-  pixel_display: toit-pixel-display
+  fw_keyboard: ..
+  toit_color_tft: ..
+  toit_pixel_display: ..
 packages:
   ..:
     path: ..
-  toit-color-tft:
-    url: github.com/toitware/toit-color-tft
-    version: 1.0.0
-  toit-pixel-display:
-    url: github.com/toitware/toit-pixel-display
-    version: 1.1.0

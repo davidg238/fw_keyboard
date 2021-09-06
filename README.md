@@ -35,3 +35,6 @@ packages:
 ```
 which suggests src is inferred.  Removing from path, fixes compilation error.
 
+
+toit pkg install --local --prefix=fw_keyboard ..
+
