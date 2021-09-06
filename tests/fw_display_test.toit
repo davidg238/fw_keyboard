@@ -12,9 +12,9 @@ import events show *
 import monitor show *
 
 import font show *
-import pixel_display show *
-import pixel_display.texture show TEXT_TEXTURE_ALIGN_RIGHT TEXT_TEXTURE_ALIGN_CENTER
-import pixel_display.true_color show BLACK get_rgb
+import toit_pixel_display show *
+import toit_pixel_display.texture show TEXT_TEXTURE_ALIGN_RIGHT TEXT_TEXTURE_ALIGN_CENTER
+import toit_pixel_display.true_color show BLACK get_rgb
 
 fw_kbd := FW_Keyboard
 lcd := null
