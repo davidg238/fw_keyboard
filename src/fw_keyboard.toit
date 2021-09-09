@@ -21,13 +21,17 @@ kbd := null
 class FW_Keyboard:
 
   on:
-    i2c_bus = i2c.Bus
-        --sda=gpio.Pin 12                  
-        --scl=gpio.Pin 11
-
-    samd20  = i2c_bus.device 0x1F
-    tsc2004 = i2c_bus.device 0x4B
-
+  
+    print "start i2c"
+    // i2c_bus = i2c.Bus
+    //   --sda=gpio.Pin 12
+    //   --scl=gpio.Pin 11
+    print "access samd20"
+    // samd20  = i2c_bus.device 0x1F
+    print "fin samd20"
+    
+    // tsc2004 = i2c_bus.device 0x4B
+/**
     spi_bus = spi.Bus
         --mosi= gpio.Pin  18
         --clock= gpio.Pin 11
@@ -45,5 +49,5 @@ class FW_Keyboard:
             --flags= COLOR_TFT_16_BIT_MODE
             --invert_colors= false
     lcd = TrueColorPixelDisplay lcd_driver
-
+*/
   off:
