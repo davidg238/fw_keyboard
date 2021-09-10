@@ -29,17 +29,17 @@ main:
   fw_kbd.on
   print "fw_kbd.on ... done"
   kbd = fw_kbd.kbd
-  print kbd.status
-  print "... fin"
-
-  /**
+  // print kbd.status
+  
   lcd = fw_kbd.lcd
   context := lcd.context --font=sans_
 
   lcd.background = BLACK
   blank
   lcd.text context 20 20 "Hello World"
-  */
+
+  print "... fin"
+
 
 blank:
   lcd.remove_all
