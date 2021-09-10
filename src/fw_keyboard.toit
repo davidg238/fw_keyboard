@@ -33,8 +33,8 @@ class FW_Keyboard:
         --clock= gpio.Pin 14
     print "create lcd_device"
     lcd_device = spi_bus.device
-        --cs= gpio.Pin 9  //8  
-        --dc= gpio.Pin 10  //9
+        --cs= gpio.Pin 9 
+        --dc= gpio.Pin 10
         --frequency= 1_000_000 * 40
     print "create lcd_driver"    
     lcd_driver = ColorTft lcd_device 320 240

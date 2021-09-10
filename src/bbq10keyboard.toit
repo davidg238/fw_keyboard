@@ -27,9 +27,10 @@ class BBQ10Keyboard:
     
   status -> int:
     return registers_.read_u8 REG_KEY
-/**
-  version -> :
+
+  version -> List:
     ver := registers_.read_u8 REG_VER
-*/
+    return [ver >> 4, ver & 0x0F]
+
     
 
