@@ -1,4 +1,0 @@
-name: test
-entrypoint: fw_display_test.toit
-triggers:
-    on_install: true

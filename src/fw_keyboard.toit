@@ -6,39 +6,35 @@ import spi
 
 import color_tft show ColorTft COLOR_TFT_16_BIT_MODE
 import pixel_display show TrueColorPixelDisplay
+import .bbq10keyboard show BBQ10Keyboard
 
 i2c_bus := null
 spi_bus := null
-samd20  := null
-tsc2004 := null
 lcd_device := null
 lcd_driver := null
 
-
-lcd := null
-kbd := null
-
 class FW_Keyboard:
 
-  on:
+  lcd := null
+  kbd := null
+  samd20  := null
+  tsc2004 := null
   
-    print "start i2c"
-    // i2c_bus = i2c.Bus
-    //   --sda=gpio.Pin 12
-    //   --scl=gpio.Pin 11
-    print "access samd20"
-    // samd20  = i2c_bus.device 0x1F
-    print "fin samd20"
-    
-    // tsc2004 = i2c_bus.device 0x4B
-/**
+  on:
+    i2c_bus = i2c.Bus
+       --sda=gpio.Pin 4
+       --scl=gpio.Pin 5
+    samd20  = i2c_bus.device 0x1F
+    tsc2004 = i2c_bus.device 0x4B
+    kbd = BBQ10Keyboard samd20
+
     spi_bus = spi.Bus
-        --mosi= gpio.Pin  18
-        --clock= gpio.Pin 11
+        --mosi= gpio.Pin  13
+        --clock= gpio.Pin 14
 
     lcd_device = spi_bus.device
-        --cs= gpio.Pin 15  
-        --dc= gpio.Pin 33
+        --cs= gpio.Pin 9  
+        --dc= gpio.Pin 10
         --frequency= 1_000_000 * 40
     
     lcd_driver = ColorTft lcd_device 320 240
@@ -49,5 +45,7 @@ class FW_Keyboard:
             --flags= COLOR_TFT_16_BIT_MODE
             --invert_colors= false
     lcd = TrueColorPixelDisplay lcd_driver
-*/
+
   off:
+
+

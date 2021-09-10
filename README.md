@@ -13,28 +13,7 @@ Plug the ESP32 feather into the back of the Featherwing Keyboard.
 ## Known Issues
  - the keyboard ALS does not work, because ESP32 Feather pin 26 is not supported as an Analog Input
 
+## WIP
 
-## Questions
-
-if in tests/package.lock, use:
-```
-prefixes:
-  fw_keyboard: ..
-  events: ..
-
-packages:
-  ..:
-    path: ../src
-```
-
-```
-/home/david/workspaceToit/fw_keyboard/tests/package.lock:7:11: error: Package '..' at '/home/david/workspaceToit/fw_keyboard/src' is missing a 'src' folder
-    path: ../src
-          ^~~~~~
-
-```
-which suggests src is inferred.  Removing from path, fixes compilation error.
-
-
-toit pkg install --local --prefix=fw_keyboard ..
+run with `toit device deploy tests/package.yaml`
 
