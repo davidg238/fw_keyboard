@@ -13,12 +13,14 @@ class ButtonEvent extends Event:
 
   constructor.num .num/int:
 
-class KeyboardEvent extends Event:
+class KeyEvent extends Event:
+  state/int
   key/int
 
-  constructor.key .key/int:
-  constructor.char achar/string:
-    key = achar[0]
+  constructor.key .state/int .key/int:
+
+  stringify -> string:
+    return "$state: $(string.from_rune key)"  //todo, fix for non-printable characters
 
 class FiveWayEvent extends Event:
   l  := false
