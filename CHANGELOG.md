@@ -1,3 +1,7 @@
+# 0.5.5 - 2021-09-12
+Attempt to get display working (does not).  
+IO declarations match schematic, except --reset, which is not controllable
+
 # 0.5.4 - 2021-09-10
 I2C to SAMD20 established, miminal keyboard handling
 

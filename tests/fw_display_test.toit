@@ -21,7 +21,7 @@ lcd := null
 
 main:
 
-  print "starting ..."
+  print "Starting display test..."
 
   sans_ ::= Font.get "sans10"
   fw_kbd := FW_Keyboard
@@ -30,14 +30,13 @@ main:
   print "fw_kbd.on ... done"
   
   lcd = fw_kbd.lcd
-  context := lcd.context --font=sans_
+  context := lcd.context --font=sans_ --color=(get_rgb 230 230 50)
 
   lcd.background = BLACK
   blank
   lcd.text context 20 20 "Hello World"
-
+  
   print "... done"
-
 
 blank:
   lcd.remove_all

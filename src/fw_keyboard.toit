@@ -29,12 +29,12 @@ class FW_Keyboard:
     kbd = BBQ10Keyboard samd20
 
     spi_bus = spi.Bus
-        --mosi= gpio.Pin  13
-        --clock= gpio.Pin 14
+        --mosi= gpio.Pin  18 // (18, 5 match schematic, work)
+        --clock= gpio.Pin  5
     // print "create lcd_device"
     lcd_device = spi_bus.device
-        --cs= gpio.Pin 9 
-        --dc= gpio.Pin 10
+        --cs= gpio.Pin  15 // (9, 10 excep) (15, 33 match schematic, excep)
+        --dc= gpio.Pin  33
         --frequency= 1_000_000 * 40
     // print "create lcd_driver"    
     lcd_driver = ColorTft lcd_device 320 240
