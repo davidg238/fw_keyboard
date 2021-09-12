@@ -30,11 +30,12 @@ main:
   print "fw_kbd.on ... done"
   
   lcd = fw_kbd.lcd
-  context := lcd.context --font=sans_ --color=(get_rgb 230 230 50)
+  context := lcd.context --font=sans_  --color=(get_rgb 230 230 50)
 
   lcd.background = BLACK
   blank
   lcd.text context 20 20 "Hello World"
+  lcd.draw
   
   print "... done"
 
