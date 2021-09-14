@@ -51,12 +51,12 @@ class BBQ10Keyboard:
 
   reset -> none:
     registers_.write_u8 REG_RST 0
-    sleep --ms=100
+    sleep --ms=100  // vital, to allow SAMD20 time to boot
     
   version -> List:
     ver := registers_.read_u8 REG_VER
     return [ver >> 4, ver & 0x0F]
-/**
+
   backlight -> int:
     return registers_.read_u8 REG_BKL
 //    return ((registers_.read_u8 REG_BKL) / 255) > 0
@@ -71,4 +71,3 @@ class BBQ10Keyboard:
   backlight2 on/bool -> none:
     val := if on: 0xFF else: 0x00
     registers_.write_u8 REG_BK2 val
-*/

@@ -1,3 +1,6 @@
+# 0.5.7 - 2021-09-13
+tft_demo.toit from color_tft runs (see /examples).
+
 # 0.5.6 - 2021-09-12
 Display working.
 IO declarations were right; SPI frequency was too high -> exception.  Also set COLOR_TFT_FLIP_XY

@@ -1,5 +1,7 @@
 prefixes:
+  color_tft: toit-color-tft
   fw_keyboard: ..
+  pixel_display: toit-pixel-display
 packages:
   ..:
     path: ..

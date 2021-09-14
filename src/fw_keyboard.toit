@@ -7,6 +7,7 @@ import spi
 import color_tft show ColorTft COLOR_TFT_16_BIT_MODE COLOR_TFT_FLIP_XY
 import pixel_display show TrueColorPixelDisplay
 import .bbq10keyboard show BBQ10Keyboard
+import monitor
 
 i2c_bus := null
 spi_bus := null
@@ -19,6 +20,7 @@ class FW_Keyboard:
   kbd := null
   samd20  := null
   tsc2004 := null
+  // events/Channel
   
   on:
     i2c_bus = i2c.Bus
@@ -27,6 +29,7 @@ class FW_Keyboard:
     samd20  = i2c_bus.device 0x1F
     tsc2004 = i2c_bus.device 0x4B
     kbd = BBQ10Keyboard samd20
+    // kbd.eventTo events
 
     spi_bus = spi.Bus
         --mosi= gpio.Pin  18 
