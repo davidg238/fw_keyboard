@@ -5,7 +5,8 @@
 
 import i2c show *
 import serial
-import .events show KeyEvent
+import .events show Event KeyEvent NonEvent
+import monitor show Channel
 
 REG_VER ::= 0x01    // Firmware version.
 REG_CFG ::= 0x02    // Configuration.
@@ -38,17 +39,27 @@ class BBQ10Keyboard:
     samd20_ = samd20
     registers_ = samd20_.registers
 
-  // Return the number of key presses in the FIFO waiting to be read
+  eventTo channel/Channel:
+
+  /// Return the number of key presses in the FIFO waiting to be read
   keyCount -> int:
     return keyStatus & KEY_COUNT_MASK
 
   keyStatus -> int:
     return registers_.read_u8 REG_KEY
 
-  readFIFO -> KeyEvent:
+  /**
+  Read the top of the FIFO, as an event.
+  If the FIFO is empty, return a NonEvent
+  */
+  readFIFO -> Event:
     val := registers_.read_u16_be REG_FIF
-    return KeyEvent.key (val >> 8) (val & 0xFF)
-
+    return 
+      if 0 == val: NonEvent
+      else: KeyEvent.key (val >> 8) (val & 0xFF)
+  /**
+  Invoked during FW_Keyboard .on, not expected to be called otherwise
+  */
   reset -> none:
     registers_.write_u8 REG_RST 0
     sleep --ms=100  // vital, to allow SAMD20 time to boot

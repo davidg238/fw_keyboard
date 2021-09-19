@@ -9,14 +9,15 @@ import pixel_display show TrueColorPixelDisplay
 import .bbq10keyboard show BBQ10Keyboard
 import monitor
 
-i2c_bus := null
-spi_bus := null
-lcd_device := null
-lcd_driver := null
 
 class FW_Keyboard:
 
-  lcd := null
+  i2c_bus := null
+  spi_bus := null
+  tft_device := null
+  tft_driver := null
+
+  tft := null
   kbd := null
   samd20  := null
   tsc2004 := null
@@ -29,25 +30,25 @@ class FW_Keyboard:
     samd20  = i2c_bus.device 0x1F
     tsc2004 = i2c_bus.device 0x4B
     kbd = BBQ10Keyboard samd20
-    // kbd.eventTo events
+    kbd.reset
 
     spi_bus = spi.Bus
         --mosi= gpio.Pin  18 
         --clock= gpio.Pin  5
-    // print "create lcd_device"
-    lcd_device = spi_bus.device
+
+    tft_device = spi_bus.device
         --cs= gpio.Pin  15 
         --dc= gpio.Pin  33
         --frequency= 1_000_000 * 20 //(fails at 40)
-    // print "create lcd_driver"    
-    lcd_driver = ColorTft lcd_device 320 240
+
+    tft_driver = ColorTft tft_device 320 240
             --reset=  gpio.Pin 16                                        ///todo, fake
             --backlight= null
             --x_offset= 0
             --y_offset= 0
             --flags= COLOR_TFT_16_BIT_MODE | COLOR_TFT_FLIP_XY
             --invert_colors= false
-    lcd = TrueColorPixelDisplay lcd_driver
+    tft = TrueColorPixelDisplay tft_driver
 
   off:
 

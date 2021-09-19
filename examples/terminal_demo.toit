@@ -1,3 +1,5 @@
+// Copyright 2021 Ekorau LLC
+
 import fw_keyboard show FW_Keyboard
 import expect show *
 

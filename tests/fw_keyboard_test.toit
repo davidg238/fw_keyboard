@@ -21,11 +21,15 @@ main:
 
   val = kbd.keyCount
   expect (val == 0) --message="Expected no keys pressed, counted $(val)"
+  print "what happens when you read the FIFO without a key press?"
+  val = kbd.readFIFO
+  print "val is: $val"
+
   print "press any alphanumeric key, within 5 seconds"
   sleep --ms=5000
   val = kbd.keyCount
   print "counted $val key events (press/hold/release)"
-  expect (val > 1) --message="Expected a key press/release, counted $(val)"
+  expect (val > 1) --message="Expected a key press+release, counted $(val)"
   
 
   print "... backlight is $(kbd.backlight)"

@@ -22,7 +22,7 @@ main:
 
   fw_kbd := FW_Keyboard
   fw_kbd.on
-  tft := fw_kbd.lcd
+  tft := fw_kbd.tft
 
   tft.background = get_rgb 0x12 0x03 0x25
   width := 320

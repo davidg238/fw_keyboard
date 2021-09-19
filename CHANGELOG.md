@@ -1,3 +1,6 @@
+# 0.5.8 - 2021-09-19
+Toy graphics hierarchy included, to learn more language syntax (inheritance, super, named args)
+
 # 0.5.7 - 2021-09-13
 tft_demo.toit from color_tft runs (see /examples).
 

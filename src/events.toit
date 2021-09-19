@@ -2,6 +2,7 @@
 
 class Event:
 
+class NonEvent extends Event:
 
 class AlsEvent extends Event:
   level/float
