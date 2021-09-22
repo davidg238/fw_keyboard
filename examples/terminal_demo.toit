@@ -10,7 +10,7 @@ import pixel_display.true_color show BLACK get_rgb
 
 class TerminalDemo:
 
-lcd := null
+tft := null
 
 main:
     print "one day a terminal demo, until then ... press any key on the FW_Keyboard"
@@ -26,21 +26,21 @@ main:
 
     sans_ ::= Font.get "sans10"
     
-    lcd = fw_kbd.lcd
-    context := lcd.context --font=sans_  --color=(get_rgb 230 230 50)
+    tft = fw_kbd.tft
+    context := tft.context --font=sans_  --color=(get_rgb 230 230 50)
 
-    lcd.background = BLACK
+    tft.background = BLACK
     blank
-    lcd.text context 20 20 "Hello World"
-    lcd.draw
+    tft.text context 20 20 "Hello World"
+    tft.draw
 
 
     while true:
-        while kbd.keyCount > 0:
-            val = kbd.readFIFO
+        while kbd.key_count > 0:
+            val = kbd.read_fifo
             print val
         sleep --ms=1000
 
 blank:
-  lcd.remove_all
-  lcd.draw
+  tft.remove_all
+  tft.draw
