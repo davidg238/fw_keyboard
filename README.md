@@ -9,10 +9,10 @@ Plug the ESP32 feather into the back of the Featherwing Keyboard.
 ## Status
 
 Display and keyboard working minimally.
+Toy graphics hierarchy to demonstrate interactivity, understand language syntax.
 
 ## ToDo
- - support 5-way button
- - support 4 tactile buttons
+ - fillout pages 1,2,3, with decent examples: TextEntryField + tab order; graphics using 5way; touch tracking
  - support screen touch
 
 ## Known Issues

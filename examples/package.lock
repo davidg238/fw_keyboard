@@ -1,5 +1,7 @@
 prefixes:
+  bbq10keyboard: ..
   color_tft: toit-color-tft
+  events: ..
   fw_keyboard: ..
   pixel_display: toit-pixel-display
 packages:

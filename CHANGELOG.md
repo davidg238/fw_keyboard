@@ -1,3 +1,6 @@
+# 0.6.0 - 2021-09-21
+Toy graphics hierarchy working.  4 buttons + 5 way selector working.
+
 # 0.5.8 - 2021-09-19
 Toy graphics hierarchy included, to learn more language syntax (inheritance, super, named args)
 

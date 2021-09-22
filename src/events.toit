@@ -1,48 +1,41 @@
 // Copyright 2021 Ekorau LLC
 
-class Event:
-
-class NonEvent extends Event:
+abstract class Event:
 
 class AlsEvent extends Event:
   level/float
 
   constructor.level .level/float:
 
-class ButtonEvent extends Event:
-  num/int
+L1_PRESS ::= KeyEvent.key 0x06 0x01
+L2_PRESS ::= KeyEvent.key 0x11 0x01
+R1_PRESS ::= KeyEvent.key 0x07 0x01
+R2_PRESS ::= KeyEvent.key 0x12 0x01
 
-  constructor.num .num/int:
+U5_PRESS ::= KeyEvent.key 0x01 0x01
+D5_PRESS ::= KeyEvent.key 0x02 0x01
+L5_PRESS ::= KeyEvent.key 0x03 0x01
+R5_PRESS ::= KeyEvent.key 0x04 0x01
+S5_PRESS ::= KeyEvent.key 0x05 0x01
 
 class KeyEvent extends Event:
   state/int
   key/int
 
-  constructor.key .state/int .key/int:
+  operator == other:
+    if other is not KeyEvent: return false
+    return (key == other.key) and (state == other.state)
+
+  hash_code:
+    /// Refer BBQ10Keyboard.read_fifo: KeyEvent.key (val & 0xFF) (val >> 8) // keycode, state
+    return (state << 8) | key
+
+  constructor.key .key/int .state/int: 
 
   stringify -> string:
-    return "$state: $(string.from_rune key)"  //todo, fix for non-printable characters
+    return "$key.$state"
 
-class FiveWayEvent extends Event:
-  l  := false
-  r  := false
-  u  := false
-  d  := false
-  s  := false
+class NonEvent extends Event:
 
-  constructor.left:
-    l = true
-  constructor.right:
-    r = true
-  constructor.up:
-    u = true
-  constructor.down:
-    d = true
-  constructor.select:
-    s = true
+class TouchEvent extends Event:
 
-  bstr in/bool -> string:
-    return if in: "1" else: "0"
-
-  stringify -> string:
-    return "jog: $(bstr l) $(bstr r) $(bstr u) $(bstr d) $(bstr s)"

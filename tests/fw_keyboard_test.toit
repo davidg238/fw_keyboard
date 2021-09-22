@@ -16,10 +16,10 @@ main:
   expect (val[0] == 0) --message="Expected version major 0, got $(val)"
   expect (val[1] == 4) --message="Expected version minor 4, got $(val)"
 
-  val = kbd.keyStatus
+  val = kbd.key_status
   expect (val == 0) --message="Expected status 0, got $(val)"
 
-  val = kbd.keyCount
+  val = kbd.key_count
   expect (val == 0) --message="Expected no keys pressed, counted $(val)"
   print "what happens when you read the FIFO without a key press?"
   val = kbd.readFIFO
@@ -27,7 +27,7 @@ main:
 
   print "press any alphanumeric key, within 5 seconds"
   sleep --ms=5000
-  val = kbd.keyCount
+  val = kbd.key_count
   print "counted $val key events (press/hold/release)"
   expect (val > 1) --message="Expected a key press+release, counted $(val)"
   
