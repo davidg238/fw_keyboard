@@ -153,7 +153,13 @@ class NullElement extends Element:
 
   handle Event -> none: 
 
-/// ---
+/** ---
+A handler is a Command object, used since ["Blocks cannot be stored in instance fields"](https://docs.toit.io/language/blocks/).
+Handler respond to some event, by invoking a specific action on a target.
+The handlers have restricted value, but work for this toy demo.
+(In Smalltalk, you might store a block in an event target (with necessary foriegn references) that respond directly to the events).
+*/
+
 class Handler:
   event/Event := ?
   action/Action := ?

@@ -1,3 +1,6 @@
+# 0.6.4 - 2021-09-23
+Tidy examples
+
 # 0.6.3 - 2021-09-23
 Touchscreen working, with 2 issues:  
 - accomodate touchscreen slightly different size than display screen

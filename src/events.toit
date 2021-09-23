@@ -33,7 +33,7 @@ class KeyEvent extends Event:
   constructor.key .key/int .state/int: 
 
   stringify -> string:
-    return "$key.$state"
+    return "key $key:$state"
 
 class NonEvent extends Event:
 
