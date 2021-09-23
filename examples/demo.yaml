@@ -1,5 +1,5 @@
 name: demo
-entrypoint: fw_keyboard_demo.toit
+entrypoint: touchscreen_demo.toit
 triggers:
-  # on_boot: true
+  on_boot: true
   on_install: true

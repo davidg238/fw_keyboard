@@ -102,29 +102,31 @@ class TouchController:
     reset
 
     cfr0 ::= STABTIME_1MS | CLOCK_1MHZ | TWELVE_BIT | PRECHARGE_276US | PENMODE
-    registers_.write_u16_be REG_CFR0 cfr0
+    write_register REG_CFR0 cfr0
 
-    registers_.write_u8 REG_CFR1 BATCHDELAY_4MS
+    write_register REG_CFR1 BATCHDELAY_4MS
 
     cfr2 ::= MAVE_Z | MAVE_Y | MAVE_X | AVG_7 | MEDIUM_15
-    registers_.write_u16_be REG_CFR2 cfr2
+    write_register REG_CFR2 cfr2
 
     write_command CMD_NORMAL
 
   touch -> TouchEvent:
-    while ((registers_.read_u8 REG_STATUS) & DAV_MASK) == 0:
+    while ((read_register REG_STATUS) & DAV_MASK) == 0:
       sleep --ms=10
 
-    x  := registers_.read_u8 REG_X
-    y  := registers_.read_u8 REG_Y
-    z1 := registers_.read_u8 REG_Z1
-    z2 := registers_.read_u8 REG_Z2
+    x  := read_register REG_X
+    y  := read_register REG_Y
+    z1 := read_register REG_Z1
+    z2 := read_register REG_Z2
 
     if (x > MAX_12BIT) or (y > MAX_12BIT) or (z1 == 0) or (z2 > MAX_12BIT) or (z1 >= z2):
         return TouchEvent 0 0 0
     pressure  := x * (z2 - z1) / z1
-    pressure   = pressure * RESISTOR_VAL / 4096
-    return TouchEvent x y pressure
+    pressure   = (pressure * RESISTOR_VAL) / 4096
+    return TouchEvent ((y * 320) / 4096) ((x * 240)/4096) pressure
+    // XY axes flipped, display in landscape mode
+    //todo fix the display touchscreen mismatch: physical offset+different size
 
   reset -> none:
     write_command CMD_RESET
@@ -134,13 +136,23 @@ class TouchController:
     while true:
       while touched:
         event_channel.send touch
-      sleep --ms=25 // right value?    
+      sleep --ms=10 // right value?    
 
   touched -> bool:
-    return (registers_.read_u8 (REG_CFR0 & (PENMODE | STATUS))) != 0
+    return (read_register (REG_CFR0 & (PENMODE | STATUS))) != 0
+
+/// ---
 
   write_command command -> none:
     registers_.write_u8 (CMD | CMD_12BIT | command) 0
+
+  read_register addr -> int:
+    return registers_.read_u16_be (addr | REG_READ)
+
+  write_register addr val -> none:
+    registers_.write_u16_be (addr | REG_PND0) val
+
+
 
 /**
 Derived in part from  https://github.com/solderparty/arturo182_CircuitPython_tsc2004/blob/main/tsc2004.py  

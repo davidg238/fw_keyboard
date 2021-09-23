@@ -13,7 +13,7 @@ Toy graphics hierarchy to demonstrate interactivity, understand language syntax.
 
 ## ToDo
  - fillout pages 1,2,3, with decent examples: TextEntryField + tab order; graphics using 5way; touch tracking
- - support screen touch
+ - make touchscreen code robust, currently errors occasionally
 
 ## Known Issues
  - the keyboard ALS does not work, because ESP32 Feather pin 26 is not supported as an Analog Input by Toit

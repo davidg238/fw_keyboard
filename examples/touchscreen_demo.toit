@@ -12,6 +12,7 @@ class TerminalDemo:
 
 main:
 
+    print "touchscreen_demo starting ..."
     val := null
 
     fw_kbd := FW_Keyboard
@@ -19,10 +20,9 @@ main:
     tscrn := fw_kbd.touchscreen
 
     tscrn.initialize
-    print "... initialized"
+    print "...touch initialized"
 
     while true:
         while tscrn.touched:
-            val = tscrn.touch
-            print val
-        sleep --ms=1000
+            print tscrn.touch
+        sleep --ms=50
