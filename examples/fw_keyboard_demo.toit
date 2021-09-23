@@ -18,6 +18,7 @@ events := Channel 10
 
 tft := null
 kbd := null
+tscrn := null
 event_mgr := null
 display_mgr := null
 
@@ -25,17 +26,22 @@ main:
 
     fwk.on
     tft = fwk.tft
-    kbd = fwk.kbd
+    kbd = fwk.keyboard
+    tscrn = fwk.touchscreen
     display_mgr = DisplayManager --display=tft
     event_mgr = EventManager --events=events --display_mgr=display_mgr
 
     /// The keyboard dispatches events for the alphnumeric keys, 4 buttons, 5 way selector and touch screen.
-    task:: keyboard_task
+//    task:: keyboard_task
+    task:: touchscreen_task
     task:: event_task
     task:: display_task
 
 keyboard_task:
-    kbd.event_to events
+    kbd.key_events_to events
+
+touchscreen_task:
+    tscrn.touch_events_to events
 
 event_task:
     event_mgr.run
@@ -43,14 +49,17 @@ event_task:
 display_task:
 
     pages := [
-        homepage,  /// The first page in the list is considered the homepage
+        home,  /// The first page in the list is considered the homepage
         page_1,
         page_2,
         page_3,
     ]
     display_mgr.show_pages pages
 
-homepage -> Page:
+/** ----
+Declare some simple page content
+*/
+home -> Page:
     page := Page --id="home"
     txt_el := Text --id="msg" --x=40 --y=120 --txt="Built on Toit"
     page.add_handlers [

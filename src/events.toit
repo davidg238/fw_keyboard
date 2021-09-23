@@ -38,4 +38,10 @@ class KeyEvent extends Event:
 class NonEvent extends Event:
 
 class TouchEvent extends Event:
+  x/int?
+  y/int?
+  pressure/int?
 
+  constructor .x .y .pressure:
+
+  stringify: return "tch $x:$y:$pressure"

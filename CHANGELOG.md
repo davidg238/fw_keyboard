@@ -1,3 +1,9 @@
+# 0.6.2 - 2021-09-22
+Initial implementation of touchscreen (non-working)
+
+# 0.6.1 - 2021-09-21
+Fix examples/terminal_demo
+
 # 0.6.0 - 2021-09-21
 Toy graphics hierarchy working.  4 buttons + 5 way selector working.
 

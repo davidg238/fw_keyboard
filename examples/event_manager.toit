@@ -20,7 +20,7 @@ class EventManager:
     run -> none:
       while true:
         event = events.receive
-        // print event
+        print event
         display_mgr.handle event
 
 

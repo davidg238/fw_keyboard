@@ -1,7 +1,9 @@
 // Copyright 2021 Ekorau LLC
 
-// The keyboard is read over I2C, via the protocol defined at:
-//  https://github.com/solderparty/bbq10kbd_i2c_sw#protocol
+/**
+The keyboard is read over I2C, via the protocol defined at:
+https://github.com/solderparty/bbq10kbd_i2c_sw#protocol
+*/     
 
 import i2c show *
 import serial
@@ -56,7 +58,7 @@ class BBQ10Keyboard:
     samd20_ = samd20
     registers_ = samd20_.registers
 
-  event_to channel/Channel:
+  key_events_to channel/Channel:
     event_channel = channel
     while true:
       while key_count > 0:
@@ -105,3 +107,30 @@ class BBQ10Keyboard:
   backlight2 on/bool -> none:
     val := if on: 0xFF else: 0x00
     registers_.write_u8 REG_BK2 val
+
+
+/**
+Derived in part from  https://github.com/arturo182/arturo182_CircuitPython_BBQ10Keyboard/blob/master/bbq10keyboard.py  
+and subject to the terms thereof:  
+MIT License
+
+Copyright (c) 2020 arturo182
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/

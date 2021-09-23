@@ -7,6 +7,7 @@ import spi
 import color_tft show ColorTft COLOR_TFT_16_BIT_MODE COLOR_TFT_FLIP_XY
 import pixel_display show TrueColorPixelDisplay
 import .bbq10keyboard show BBQ10Keyboard
+import .touchcontroller show TouchController
 import monitor
 
 
@@ -18,19 +19,21 @@ class FW_Keyboard:
   tft_driver := null
 
   tft := null
-  kbd := null
+  keyboard := null
+  touchscreen := null
   samd20  := null
   tsc2004 := null
-  // events/Channel
-  
+    
   on:
     i2c_bus = i2c.Bus
        --sda=gpio.Pin 23
        --scl=gpio.Pin 22
     samd20  = i2c_bus.device 0x1F
     tsc2004 = i2c_bus.device 0x4B
-    kbd = BBQ10Keyboard samd20
-    kbd.reset
+    keyboard = BBQ10Keyboard samd20
+    keyboard.reset
+    touchscreen = TouchController tsc2004
+    touchscreen.initialize
 
     spi_bus = spi.Bus
         --mosi= gpio.Pin  18 

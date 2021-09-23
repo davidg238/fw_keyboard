@@ -19,7 +19,7 @@ main:
 
     fw_kbd := FW_Keyboard
     fw_kbd.on
-    kbd := fw_kbd.kbd
+    kbd := fw_kbd.keyboard
 
     kbd.reset
     print "... reset"
