@@ -112,6 +112,8 @@ class TouchController:
     write_command CMD_NORMAL
 
   touch -> TouchEvent:
+    xs := 0
+    ys := 0
     while ((read_register REG_STATUS) & DAV_MASK) == 0:
       sleep --ms=10
 
@@ -124,8 +126,21 @@ class TouchController:
         return TouchEvent 0 0 0
     pressure  := x * (z2 - z1) / z1
     pressure   = (pressure * RESISTOR_VAL) / 4096
-    return TouchEvent ((y * 320) / 4096) ((x * 240)/4096) pressure
-    // XY axes flipped, display in landscape mode
+    /** 
+    XY axes flipped, display in landscape mode
+    Raw touchscreen events for the screen corners range from 200, 200 to 3700, 3800
+    */
+    xs = (((y-200) * 320) / 3500).to_int  // Are there min, max functions?  Can't see them.
+    xs = xs < 0? 0 : xs
+    xs = xs > 320 ? 320 : xs
+
+    ys = (240 - (((x-200) * 240)) / 3600)
+    ys = ys < 0? 0 : ys
+    ys = ys > 240? 240 : ys
+
+    return TouchEvent xs ys pressure
+
+
     //todo fix the display touchscreen mismatch: physical offset+different size
 
   reset -> none:
@@ -147,11 +162,28 @@ class TouchController:
     registers_.write_u8 (CMD | CMD_12BIT | command) 0
 
   read_register addr -> int:
+    return retry_read_3 addr
+
+  read_register_ addr -> int:
     return registers_.read_u16_be (addr | REG_READ)
 
   write_register addr val -> none:
     registers_.write_u16_be (addr | REG_PND0) val
 
+/** 
+Used to mostly? avoid exceptions on reading the touchscreen.
+Previously exceptions were thrown after about 100 events.
+With this retry, sofar none seen in light testing
+*/
+
+  retry_read_3 addr:
+    tries := 0
+    while tries < 2:
+      exception := catch:
+        return read_register_ addr
+      if exception:
+        sleep --ms=1
+    return read_register_ addr
 
 
 /**

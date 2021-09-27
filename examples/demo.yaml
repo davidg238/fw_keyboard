@@ -1,5 +1,5 @@
 name: demo
-entrypoint: touchscreen_demo.toit
+entrypoint: demo_touchscreen.toit
 triggers:
   on_boot: true
   on_install: true

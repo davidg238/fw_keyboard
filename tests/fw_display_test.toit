@@ -29,8 +29,8 @@ main:
   fw_kbd.on
   print "fw_kbd.on ... done"
   
-  lcd = fw_kbd.lcd
-  kbd := fw_kbd.kbd
+  lcd = fw_kbd.tft
+  kbd := fw_kbd.keyboard
 
   context := lcd.context --font=sans_  --color=(get_rgb 230 230 50)
 

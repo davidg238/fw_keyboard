@@ -56,7 +56,7 @@ main:
   tft.add grey_histo
   x_axis := tft.filled_rectangle histo_context -10 70 70 1
   y_axis := tft.filled_rectangle histo_context 0 0 1 80
-
+  
   code := "$(%06d (random 0 1000000))$(%07d (random 0 10000000))"
   barcode_transform := tft.landscape.translate 200 10
   barcode := BarCodeEan13 code 0 0 barcode_transform

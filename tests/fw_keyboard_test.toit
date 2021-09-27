@@ -8,7 +8,7 @@ main:
 
   fw_kbd := FW_Keyboard
   fw_kbd.on
-  kbd := fw_kbd.kbd
+  kbd := fw_kbd.keyboard
 
   kbd.reset
   print "... reset"
@@ -22,7 +22,7 @@ main:
   val = kbd.key_count
   expect (val == 0) --message="Expected no keys pressed, counted $(val)"
   print "what happens when you read the FIFO without a key press?"
-  val = kbd.readFIFO
+  val = kbd.read_fifo
   print "val is: $val"
 
   print "press any alphanumeric key, within 5 seconds"

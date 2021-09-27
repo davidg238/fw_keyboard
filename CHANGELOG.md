@@ -1,3 +1,7 @@
+# 0.7.0 - 2021-09-27
+Touchscreen working and scaled to screen.  
+Pleae report any unreliability seen using the touch_controller.
+
 # 0.6.4 - 2021-09-23
 Tidy examples
 
@@ -5,20 +9,6 @@ Tidy examples
 Touchscreen working, with 2 issues:  
 - accomodate touchscreen slightly different size than display screen
 - exception after indeterminate period, even if no touch interactions
-```
-EXCEPTION error. 
-I2C_READ_FAILED
-  0: Device.read_reg.<block>   <sdk>/i2c.toit:165:36
-  1: Bus.read_reg_             <sdk>/i2c.toit:97:29
-  2: Device.read_reg           <sdk>/i2c.toit:173:17
-  3: Device.read_reg           <sdk>/i2c.toit:165:12
-  4: Registers.read_bytes      <sdk>/i2c.toit:196:20
-  5: Registers.read_u16_be     <sdk>/serial/registers.toit:81:14
-  6: TouchController.read_register <pkg:..>/touch_controller.toit:148:23
-  7: TouchController.touch     <pkg:..>/touch_controller.toit:115:13
-  8: main                      /home/david/workspaceToit/fw_keyboard/examples/touchscreen_demo.toit:27:25
-  9: __entry__.<lambda>        <sdk>/core/entry.toit:46:20
-```
 
 # 0.6.2 - 2021-09-22
 Initial implementation of touchscreen (non-working)
