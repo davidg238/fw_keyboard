@@ -1,3 +1,5 @@
+# 1.0.0 - 2021-09-27
+
 # 0.7.0 - 2021-09-27
 Touchscreen working and scaled to screen.  
 Pleae report any unreliability seen using the touch_controller.
