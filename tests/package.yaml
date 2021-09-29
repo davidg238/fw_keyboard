@@ -2,6 +2,8 @@ dependencies:
   color_tft:
     url: github.com/toitware/toit-color-tft
     version: ^1.0.1
+  fw_keyboard:
+    path: ..
   pixel_display:
     url: github.com/toitware/toit-pixel-display
     version: ^1.2.0
