@@ -61,7 +61,8 @@ popup_msg tft context a_string/string -> none:
     clear_screen tft
 
 get_order kbd/BBQ10Keyboard -> int:
-    while true:
+    while run:
+        sleep --ms=1000
         while kbd.key_count > 0:
             event := kbd.read_fifo
             if      L1_PRESS==event: return 1
@@ -71,8 +72,9 @@ get_order kbd/BBQ10Keyboard -> int:
                 pubsub.publish "device:end_app" "app_hilbert"
                 run = false
                 return -1
+    return -1
 
-        sleep --ms=1000
+
 
 draw_hilbert order/int tft context tiny_context-> none:
 

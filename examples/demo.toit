@@ -43,6 +43,7 @@ clear_screen tft -> none:
 
 handle_keyboard kbd/BBQ10Keyboard -> none:
     while run:
+        sleep --ms=1000
         while kbd.key_count > 0:
             event := kbd.read_fifo
             if event is KeyEvent: 
@@ -54,4 +55,3 @@ handle_keyboard kbd/BBQ10Keyboard -> none:
                     else if k_event.key==119:
                         pubsub.publish "device:run_hilbert" "launcher"
                         run = false
-        sleep --ms=1000
