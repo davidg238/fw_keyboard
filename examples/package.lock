@@ -1,5 +1,7 @@
 prefixes:
+  bbq10keyboard: ..
   color_tft: toit-color-tft
+  events: ..
   fw_keyboard: ..
   pixel_display: toit-pixel-display
 packages:
@@ -8,6 +10,7 @@ packages:
     prefixes:
       color_tft: toit-color-tft
       pixel_display: toit-pixel-display
+      pixel_strip: toit-pixel-strip
   toit-color-tft:
     url: github.com/toitware/toit-color-tft
     version: 1.1.0
@@ -18,3 +21,7 @@ packages:
     url: github.com/toitware/toit-pixel-display
     version: 1.2.0
     hash: 417f476dd90e096bde74820203277bfaec88d9ca
+  toit-pixel-strip:
+    url: github.com/toitware/toit-pixel-strip
+    version: 0.0.4
+    hash: da4e95f400e87d4a77949f04531a0689ef7b8bd1

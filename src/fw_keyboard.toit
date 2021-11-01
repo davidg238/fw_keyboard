@@ -45,7 +45,7 @@ class FW_Keyboard:
         --frequency= 1_000_000 * 20 //(fails at 40)
 
     tft_driver = ColorTft tft_device 320 240
-            --reset=  gpio.Pin 16                                        ///todo, fake
+            --reset=  null
             --backlight= null
             --x_offset= 0
             --y_offset= 0

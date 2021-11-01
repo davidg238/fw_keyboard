@@ -5,3 +5,6 @@ dependencies:
   pixel_display:
     url: github.com/toitware/toit-pixel-display
     version: ^1.2.0
+  pixel_strip:
+    url: github.com/toitware/toit-pixel-strip
+    version: ^0.0.4

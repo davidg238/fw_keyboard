@@ -17,12 +17,19 @@ import spi
 
 import monitor show Channel
 import fw_keyboard show FW_Keyboard
+import bbq10keyboard show BBQ10Keyboard
+import events show R2_PRESS
+
+import pubsub
+
+run := true
 
 main:
 
   fw_kbd := FW_Keyboard
   fw_kbd.on
   tft := fw_kbd.tft
+  kbd := fw_kbd.keyboard
 
   tft.background = get_rgb 0x12 0x03 0x25
   width := 320
@@ -78,7 +85,7 @@ main:
   x := 0
   y := 0
   last := Time.monotonic_us
-  while true:
+  while run:
     sleep --ms=1  // Avoid watchdog.
     square.move_to x y
     if x < sq_x: x += 2
@@ -111,6 +118,10 @@ main:
     grey_histo.add diff
     red_histo.add diff - 50
     last = next
+    check_for_quit kbd  // added 
+
+  print " ... that's all folks"
+
 
 square_square x y transform [get_color]:
   POSNS ::= [50, 0, 0, 35, 50, 0, 27, 85, 0, 15, 50, 35, 17, 65, 35, 6, 82, 46, 11, 82, 35, 8, 85, 27, 19, 93, 27, 29, 0, 50, 25, 29, 50, 9, 54, 50, 2, 63, 50, 7, 63, 52, 6, 72, 35, 16, 54, 59, 18, 70, 52, 24, 88, 46, 33, 0, 79, 4, 29, 75, 37, 33, 75, 42, 70, 70]
@@ -131,3 +142,10 @@ square_square x y transform [get_color]:
     else:
       group.add tex
   return [group, texture]
+
+check_for_quit kbd/BBQ10Keyboard -> none:
+  if kbd.key_count > 0:
+    event := kbd.read_fifo
+    if event==R2_PRESS:
+      pubsub.publish "device:end_app" "app_tft"
+      run = false

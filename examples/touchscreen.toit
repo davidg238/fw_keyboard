@@ -10,8 +10,6 @@ import pixel_display.true_color show WHITE BLACK get_rgb
 import font show *
 import font.x11_100dpi.sans.sans_10 as sans_10
 
-class TerminalDemo:
-
 main:
 
     print "touchscreen_demo starting ..."

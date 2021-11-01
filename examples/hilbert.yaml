@@ -1,0 +1,5 @@
+name: hilbert
+entrypoint: hilbert.toit
+triggers:
+  on_pubsub_topic:
+    - "device:run_hilbert"

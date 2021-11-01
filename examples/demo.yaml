@@ -1,5 +1,7 @@
 name: demo
-entrypoint: demo_tft.toit
+entrypoint: demo.toit
 triggers:
   on_boot: true
   on_install: true
+  on_pubsub_topic:
+    - "device:end_app"
