@@ -16,6 +16,7 @@ import font.x11_100dpi.sans.sans_10 as sans_10
 import pubsub
 
 run := true
+topic := ""
 
 main:
 
@@ -34,24 +35,27 @@ main:
     tft.text context 60 120 "1: Hilbert Curves"
     tft.draw
 
-    handle_keyboard kbd
+    handle_keyboard fw_kbd
+    fw_kbd.off
+    print "... demo end"
+    pubsub.publish topic "launcher"
 
 clear_screen tft -> none:
     tft.remove_all
     tft.background = BLACK
     tft.draw
 
-handle_keyboard kbd/BBQ10Keyboard -> none:
+handle_keyboard fw_kbd/FW_Keyboard -> none:
     while run:
         sleep --ms=1000
-        while kbd.key_count > 0:
-            event := kbd.read_fifo
+        while fw_kbd.keyboard.key_count > 0:
+            event := fw_kbd.keyboard.read_fifo
             if event is KeyEvent: 
                 k_event := event as KeyEvent
                 if k_event.state==1:
                     if      k_event.key==126:
-                        pubsub.publish "device:run_tft" "launcher"
+                        topic = "device:run_tft"
                         run = false
                     else if k_event.key==119:
-                        pubsub.publish "device:run_hilbert" "launcher"
+                        topic = "device:run_hilbert"
                         run = false

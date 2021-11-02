@@ -120,7 +120,9 @@ main:
     last = next
     check_for_quit kbd  // added 
 
-  print " ... that's all folks"
+  fw_kbd.off
+  print " ... tft end"
+  pubsub.publish "device:end_app" "app_tft"
 
 
 square_square x y transform [get_color]:
@@ -147,5 +149,4 @@ check_for_quit kbd/BBQ10Keyboard -> none:
   if kbd.key_count > 0:
     event := kbd.read_fifo
     if event==R2_PRESS:
-      pubsub.publish "device:end_app" "app_tft"
       run = false

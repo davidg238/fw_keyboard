@@ -2,7 +2,7 @@
 
 import fw_keyboard show FW_Keyboard
 import bbq10keyboard show BBQ10Keyboard KEY_L1 KEY_L2 KEY_R1 KEY_R2
-import events show L1_PRESS L2_PRESS R1_PRESS R2_PRESS
+import events show R2_PRESS KeyEvent
 import expect show *
 
 import font show *
@@ -41,16 +41,13 @@ main:
     
     order := 1
     while run:
-        draw_hilbert order tft context tiny_context
-        order = get_order kbd   
-    print " ... that's all folks"
+        if not (order < 1): draw_hilbert order tft context tiny_context
+        order = get_order kbd
+    fw_kbd.off
+    print " ... hilbert end"
+    // sleep --ms=1000
+    pubsub.publish "device:end_app" "app_hilbert"
 
-check_for_quit kbd/BBQ10Keyboard -> none:
-  if kbd.key_count > 0:
-    event := kbd.read_fifo
-    if event==R2_PRESS:
-      pubsub.publish "device:end_app" "demo_tft"
-      run = false
 
 popup_msg tft context a_string/string -> none:
     clear_screen tft
@@ -63,14 +60,18 @@ popup_msg tft context a_string/string -> none:
 get_order kbd/BBQ10Keyboard -> int:
     while run:
         sleep --ms=1000
-        while kbd.key_count > 0:
+        while run and (kbd.key_count > 0):
             event := kbd.read_fifo
-            if      L1_PRESS==event: return 1
-            else if L2_PRESS==event: return 2
-            else if R1_PRESS==event: return 3
-            else if R2_PRESS==event:
-                pubsub.publish "device:end_app" "app_hilbert"
-                run = false
+            if event is KeyEvent: 
+                k_event := event as KeyEvent
+                if k_event==R2_PRESS:
+                        run = false
+                        return -1
+                if k_event.state==1:
+                    if      k_event.key==119: return 1
+                    else if k_event.key==101: return 2
+                    else if k_event.key==114: return 3
+                    else if k_event.key==115: return 4
                 return -1
     return -1
 

@@ -54,5 +54,23 @@ class FW_Keyboard:
     tft = TrueColorPixelDisplay tft_driver
 
   off:
+    samd20.close
+    tsc2004.close
+    tft.close
+    tft_driver.close
+//    tft_device.close
+
+//    i2c_bus.close 
+//    spi_bus.close
 
 
+/*
+EXCEPTION error. 
+WRONG_OBJECT_TYPE
+  0: spi_device_close_         <sdk>/spi.toit:243:3
+  1: Device_.close             <sdk>/spi.toit:159:7
+  2: FW_Keyboard.off           <pkg:..>/fw_keyboard.toit:61:16
+  3: handle_keyboard           /home/david/workspaceToit/fw_keyboard/examples/demo.toit:58:12
+  4: main                      /home/david/workspaceToit/fw_keyboard/examples/demo.toit:37:5
+  5: __entry__.<lambda>        <sdk>/core/entry.toit:46:20
+*/

@@ -1,3 +1,6 @@
+# 1.0.4 - 2021-11-01
+Implement FW_Keyboard.off, launcher app; broken
+
 # 1.0.1 - 2021-10-29
 Dependencies updated
 
