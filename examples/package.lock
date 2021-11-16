@@ -4,6 +4,7 @@ prefixes:
   events: ..
   fw_keyboard: ..
   pixel_display: toit-pixel-display
+  roboto: toit-font-google-100dpi-roboto
 packages:
   ..:
     path: ..
@@ -17,6 +18,10 @@ packages:
     hash: 5de85089539c7641313bdf9a7b20a021cf8033c6
     prefixes:
       pixel_display: toit-pixel-display
+  toit-font-google-100dpi-roboto:
+    url: github.com/toitware/toit-font-google-100dpi-roboto
+    version: 1.1.0
+    hash: 7f34330ed3cfbae1f077f1bd7fa48d4ad484b291
   toit-pixel-display:
     url: github.com/toitware/toit-pixel-display
     version: 1.2.0

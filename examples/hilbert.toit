@@ -1,5 +1,12 @@
 // Copyright 2021 Ekorau LLC
 
+/* References:
+- [Coding in the Cabana 3: Hilbert Curve](https://youtu.be/dSK-MW-zuAc) simple intro
+- [Coding in the Cabana](https://github.com/CodingTrain/website/blob/main/challenges/coding-in-the-cabana/003_hilbert_curve/Processing/Hilbert/Hilbert.pde)
+- [Iterative Algorithm for drawing Hilbert curve](http://blog.marcinchwedczuk.pl/iterative-algorithm-for-drawing-hilbert-curve)
+- [Making 2D Hilbert Curve](https://bioconductor.org/packages/devel/bioc/vignettes/HilbertCurve/inst/doc/HilbertCurve.html)
+*/
+
 import fw_keyboard show FW_Keyboard
 import bbq10keyboard show BBQ10Keyboard KEY_L1 KEY_L2 KEY_R1 KEY_R2
 import events show R2_PRESS KeyEvent

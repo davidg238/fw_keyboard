@@ -18,6 +18,8 @@ import pubsub
 run := true
 topic := ""
 
+// Does not currently run properly, waiting on response from Toit
+
 main:
 
     fw_kbd := FW_Keyboard

@@ -1,3 +1,6 @@
+# 1.0.5 - 2021-11-16
+Fix dependency; disable launcher
+
 # 1.0.4 - 2021-11-01
 Implement FW_Keyboard.off, launcher app; broken
 

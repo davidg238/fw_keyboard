@@ -1,7 +1,7 @@
 name: demo
-entrypoint: demo.toit
+entrypoint: hilbert.toit
 triggers:
   on_boot: true
   on_install: true
-  on_pubsub_topic:
-    - "device:end_app"
+#  on_pubsub_topic:
+#    - "device:end_app"
