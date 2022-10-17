@@ -7,6 +7,6 @@ dependencies:
   pixel_display:
     url: github.com/toitware/toit-pixel-display
     version: ^1.6.0
-  roboto:
-    url: github.com/toitware/toit-font-google-100dpi-roboto
-    version: ^1.1.0
+  pixel_strip:
+    url: github.com/toitware/toit-pixel-strip
+    version: ^0.2.0

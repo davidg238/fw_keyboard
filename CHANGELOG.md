@@ -1,3 +1,6 @@
+# 1.0.7 - 2022-10-17
+Correct .yaml files and imports
+
 # 1.0.6 - 2022-10-17
 Updated project, compatible with toitlang and jag.
 

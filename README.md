@@ -26,3 +26,6 @@ Plug the ESP32 feather into the back of the Featherwing Keyboard.
 ## ToDo
 - Is touchscreen fully robust?
 - Only minimal samples provided
+
+name: fw_keyboard
+description: A library to enable use of the [Keyboard FeatherWing Rev 2](https://www.solder.party/docs/keyboard-featherwing/rev2/)

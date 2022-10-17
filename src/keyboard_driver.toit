@@ -6,7 +6,8 @@ import spi
 
 import color_tft show ColorTft COLOR_TFT_16_BIT_MODE COLOR_TFT_FLIP_XY
 import pixel_display show TrueColorPixelDisplay
-import fw_keyboard show BBQ10Keyboard TouchController 
+import .bbq10keyboard show BBQ10Keyboard 
+import .touch_controller show TouchController 
 import monitor
 
 

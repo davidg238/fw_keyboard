@@ -130,7 +130,7 @@ class TouchController:
     XY axes flipped, display in landscape mode
     Raw touchscreen events for the screen corners range from 200, 200 to 3700, 3800
     */
-    xs = (((y-200) * 320) / 3500).to_int  // Are there min, max functions?  Can't see them.
+    xs = (((y-200) * 320) / 3500).to_int
     xs = xs < 0? 0 : xs
     xs = xs > 320 ? 320 : xs
 
@@ -139,9 +139,6 @@ class TouchController:
     ys = ys > 240? 240 : ys
 
     return TouchEvent xs ys pressure
-
-
-    //todo fix the display touchscreen mismatch: physical offset+different size
 
   reset -> none:
     write_command CMD_RESET

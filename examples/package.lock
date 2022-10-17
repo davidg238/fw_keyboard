@@ -2,25 +2,25 @@ prefixes:
   color_tft: toit-color-tft
   fw_keyboard: ..
   pixel_display: toit-pixel-display
-  roboto: toit-font-google-100dpi-roboto
+  pixel_strip: toit-pixel-strip
 packages:
   ..:
     path: ..
     prefixes:
       color_tft: toit-color-tft
-      fw_keyboard: ..
       pixel_display: toit-pixel-display
+      pixel_strip: toit-pixel-strip
   toit-color-tft:
     url: github.com/toitware/toit-color-tft
     version: 1.3.0
     hash: 485c03596df840ec16b3e198736f044785d7e145
     prefixes:
       pixel_display: toit-pixel-display
-  toit-font-google-100dpi-roboto:
-    url: github.com/toitware/toit-font-google-100dpi-roboto
-    version: 1.1.0
-    hash: 7f34330ed3cfbae1f077f1bd7fa48d4ad484b291
   toit-pixel-display:
     url: github.com/toitware/toit-pixel-display
     version: 1.6.0
     hash: 39de82f680e27961e39ca24ba94520f21759370c
+  toit-pixel-strip:
+    url: github.com/toitware/toit-pixel-strip
+    version: 0.2.0
+    hash: 72c721c7f0929e6ed8502a2384924e853d9cd583
