@@ -16,17 +16,14 @@ import pixel_display.true_color show *
 import spi
 
 import monitor show Channel
-import fw_keyboard show FW_Keyboard
-import bbq10keyboard show BBQ10Keyboard
-import events show R2_PRESS
+import fw_keyboard show Keyboard_Driver BBQ10Keyboard R2_PRESS
 
-import pubsub
 
 run := true
 
 main:
 
-  fw_kbd := FW_Keyboard
+  fw_kbd := Keyboard_Driver
   fw_kbd.on
   tft := fw_kbd.tft
   kbd := fw_kbd.keyboard
@@ -105,7 +102,7 @@ main:
       x_axis.set_transform histo_transform
       y_axis.set_transform histo_transform
       barcode_transform = (barcode_transform.translate 50 50).rotate_left.translate -50 -50
-    else if barcode.get_transform != barcode_transform:
+    else if barcode.transform != barcode_transform:
       barcode.set_transform barcode_transform
     red.move_to red_x 60
     red.color = get_rgb 0xff 0x7f + red_x 0x7f + red_x
@@ -122,7 +119,6 @@ main:
 
   fw_kbd.off
   print " ... tft end"
-  pubsub.publish "device:end_app" "app_tft"
 
 
 square_square x y transform [get_color]:

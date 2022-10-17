@@ -1,6 +1,6 @@
-// Copyright 2021 Ekorau LLC
+// Copyright 2021, 2022 Ekorau LLC
 
-import fw_keyboard show FW_Keyboard
+import fw_keyboard show Keyboard_Driver
 import expect show *
 
 import font show *
@@ -15,7 +15,7 @@ main:
 
     val := null
 
-    fw_kbd := FW_Keyboard
+    fw_kbd := Keyboard_Driver
     fw_kbd.on
     kbd := fw_kbd.keyboard
 

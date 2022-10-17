@@ -1,5 +1,0 @@
-name: tft
-entrypoint: tft.toit
-triggers:
-  on_pubsub_topic:
-    - "device:run_tft"

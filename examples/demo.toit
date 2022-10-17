@@ -1,9 +1,6 @@
-// Copyright 2021 Ekorau LLC
+// Copyright 2021, 2022 Ekorau LLC
 
-import fw_keyboard show FW_Keyboard
-import bbq10keyboard show BBQ10Keyboard KEY_L1 KEY_L2 KEY_R1 KEY_R2
-import events show KeyEvent
-import expect show *
+import fw_keyboard show Keyboard_Driver BBQ10Keyboard KEY_L1 KEY_L2 KEY_R1 KEY_R2 KeyEvent
 
 import font show *
 import pixel_display show *
@@ -13,8 +10,6 @@ import font show *
 import font.matthew_welch.tiny as tiny_4
 import font.x11_100dpi.sans.sans_10 as sans_10
 
-import pubsub
-
 run := true
 topic := ""
 
@@ -22,7 +17,7 @@ topic := ""
 
 main:
 
-    fw_kbd := FW_Keyboard
+    fw_kbd := Keyboard_Driver
     fw_kbd.on
     tft := fw_kbd.tft
     kbd := fw_kbd.keyboard
@@ -40,14 +35,13 @@ main:
     handle_keyboard fw_kbd
     fw_kbd.off
     print "... demo end"
-    pubsub.publish topic "launcher"
 
 clear_screen tft -> none:
     tft.remove_all
     tft.background = BLACK
     tft.draw
 
-handle_keyboard fw_kbd/FW_Keyboard -> none:
+handle_keyboard fw_kbd/Keyboard_Driver -> none:
     while run:
         sleep --ms=1000
         while fw_kbd.keyboard.key_count > 0:

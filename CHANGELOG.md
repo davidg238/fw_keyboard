@@ -1,3 +1,6 @@
+# 1.0.6 - 2022-10-17
+Updated project, compatible with toitlang and jag.
+
 # 1.0.5 - 2021-11-16
 Fix dependency; disable launcher
 

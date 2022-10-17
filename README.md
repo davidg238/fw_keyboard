@@ -25,4 +25,4 @@ Plug the ESP32 feather into the back of the Featherwing Keyboard.
 
 ## ToDo
 - Is touchscreen fully robust?
-- Only minimal samples provided (HotDraw based code removed for further development) 
+- Only minimal samples provided

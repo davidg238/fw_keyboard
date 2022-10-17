@@ -1,7 +1,5 @@
 prefixes:
-  bbq10keyboard: ..
   color_tft: toit-color-tft
-  events: ..
   fw_keyboard: ..
   pixel_display: toit-pixel-display
   roboto: toit-font-google-100dpi-roboto
@@ -10,12 +8,12 @@ packages:
     path: ..
     prefixes:
       color_tft: toit-color-tft
+      fw_keyboard: ..
       pixel_display: toit-pixel-display
-      pixel_strip: toit-pixel-strip
   toit-color-tft:
     url: github.com/toitware/toit-color-tft
-    version: 1.1.0
-    hash: 5de85089539c7641313bdf9a7b20a021cf8033c6
+    version: 1.3.0
+    hash: 485c03596df840ec16b3e198736f044785d7e145
     prefixes:
       pixel_display: toit-pixel-display
   toit-font-google-100dpi-roboto:
@@ -24,9 +22,5 @@ packages:
     hash: 7f34330ed3cfbae1f077f1bd7fa48d4ad484b291
   toit-pixel-display:
     url: github.com/toitware/toit-pixel-display
-    version: 1.2.0
-    hash: 417f476dd90e096bde74820203277bfaec88d9ca
-  toit-pixel-strip:
-    url: github.com/toitware/toit-pixel-strip
-    version: 0.0.4
-    hash: da4e95f400e87d4a77949f04531a0689ef7b8bd1
+    version: 1.6.0
+    hash: 39de82f680e27961e39ca24ba94520f21759370c

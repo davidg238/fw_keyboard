@@ -1,14 +1,11 @@
-// Copyright 2021 Ekorau LLC
+// Copyright 2021, 2022 Ekorau LLC
 
 import gpio.adc as adc
 
-import pubsub
 import encoding.json
 import gpio
 
-import fw_keyboard show FW_Keyboard
-import fw_keyboard.events show *
-import fw_keyboard.bbq10keyboard show *
+import fw_keyboard show Keyboard_Driver
 
 import monitor show *
 
@@ -24,7 +21,7 @@ main:
   print "Starting display test..."
 
   sans_ ::= Font.get "sans10"
-  fw_kbd := FW_Keyboard
+  fw_kbd := Keyboard_Driver
 
   fw_kbd.on
   print "fw_kbd.on ... done"
@@ -36,7 +33,7 @@ main:
 
   lcd.background = BLACK
   blank
-  lcd.text context 20 20 "Hello World"
+  lcd.text context 60 60 "Hello World"
   kbd.backlight false
   kbd.backlight2 false
   lcd.draw

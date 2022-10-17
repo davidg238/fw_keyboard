@@ -1,7 +1,6 @@
-// Copyright 2021 Ekorau LLC
+// Copyright 2021, 2022 Ekorau LLC
 
-import fw_keyboard show FW_Keyboard
-import expect show *
+import fw_keyboard show Keyboard_Driver
 
 import font show *
 import pixel_display show *
@@ -15,7 +14,7 @@ main:
     print "touchscreen_demo starting ..."
     val := null
 
-    fw_kbd := FW_Keyboard
+    fw_kbd := Keyboard_Driver
     fw_kbd.on
     tscrn := fw_kbd.touchscreen
 

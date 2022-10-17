@@ -15,7 +15,7 @@ import pixel_display.true_color show BLACK WHITE get_rgb
 import roboto.bold_36 as roboto_36_bold
 import spi
 
-import fw_keyboard show FW_Keyboard
+import fw_keyboard show Keyboard_Driver
 
 DAYS ::= ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 MONTHS ::= ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -27,7 +27,7 @@ MONTHS ::= ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"
 // time, depending on where there is space.
 main:
 
-  fw_kbd := FW_Keyboard
+  fw_kbd := Keyboard_Driver
   fw_kbd.on
   tft := fw_kbd.tft
 

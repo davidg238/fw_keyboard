@@ -1,4 +1,4 @@
-// Copyright 2021 Ekorau LLC
+// Copyright 2021, 2022 Ekorau LLC
 
 /* References:
 - [Coding in the Cabana 3: Hilbert Curve](https://youtu.be/dSK-MW-zuAc) simple intro
@@ -7,10 +7,7 @@
 - [Making 2D Hilbert Curve](https://bioconductor.org/packages/devel/bioc/vignettes/HilbertCurve/inst/doc/HilbertCurve.html)
 */
 
-import fw_keyboard show FW_Keyboard
-import bbq10keyboard show BBQ10Keyboard KEY_L1 KEY_L2 KEY_R1 KEY_R2
-import events show R2_PRESS KeyEvent
-import expect show *
+import fw_keyboard show Keyboard_Driver BBQ10Keyboard KEY_L1 KEY_L2 KEY_R1 KEY_R2 R2_PRESS KeyEvent
 
 import font show *
 import pixel_display show *
@@ -21,7 +18,6 @@ import font.matthew_welch.tiny as tiny_4
 import font.x11_100dpi.sans.sans_10 as sans_10
 
 import math show pow Point3f
-import pubsub
 
 hilbert1 := [
 /* 0: */ Point3f 0 0 0,
@@ -34,7 +30,7 @@ run := true
 
 main:
 
-    fw_kbd := FW_Keyboard
+    fw_kbd := Keyboard_Driver
     fw_kbd.on
     tft := fw_kbd.tft
     kbd := fw_kbd.keyboard
@@ -46,14 +42,13 @@ main:
 
     popup_msg tft context "Function keys = Hilbert Curves, order 1-4"
     
-    order := 1
+    order := 4
     while run:
         if not (order < 1): draw_hilbert order tft context tiny_context
         order = get_order kbd
     fw_kbd.off
     print " ... hilbert end"
     // sleep --ms=1000
-    pubsub.publish "device:end_app" "app_hilbert"
 
 
 popup_msg tft context a_string/string -> none:
