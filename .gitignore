@@ -1,7 +1,3 @@
 .packages/
 examples/.packages
-examples/ui_demo.toit
-examples/ui_display_manager.toit
-examples/ui_elements.toit
-examples/ui_event_manager.toit
 tests/.packages

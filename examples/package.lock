@@ -1,8 +1,10 @@
 prefixes:
   color_tft: toit-color-tft
+  font_x11_adobe: pkg-font-x11-adobe
   fw_keyboard: ..
   pixel_display: toit-pixel-display
   pixel_strip: toit-pixel-strip
+  solar_position: toit-solar-position
 packages:
   ..:
     path: ..
@@ -10,6 +12,10 @@ packages:
       color_tft: toit-color-tft
       pixel_display: toit-pixel-display
       pixel_strip: toit-pixel-strip
+  pkg-font-x11-adobe:
+    url: github.com/toitlang/pkg-font-x11-adobe
+    version: 0.1.0
+    hash: f844400722165252148f087cdf189abab0a47f3d
   toit-color-tft:
     url: github.com/toitware/toit-color-tft
     version: 1.3.0
@@ -24,3 +30,7 @@ packages:
     url: github.com/toitware/toit-pixel-strip
     version: 0.2.0
     hash: 72c721c7f0929e6ed8502a2384924e853d9cd583
+  toit-solar-position:
+    url: github.com/toitware/toit-solar-position
+    version: 0.0.3
+    hash: 82c796ae33d0fc7448f0beb4e485485d093e4e29
