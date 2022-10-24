@@ -12,41 +12,88 @@ import pixel_display.texture show *
 import pixel_display.true_color show *
 
 import font show Font
-import font.x11_100dpi.typewriter.typewriter_10 as typX11
+import font_x11_adobe.typewriter_10 as typ_10
+import font_x11_adobe.typewriter_18 as typ_18
+import font.matthew_welch.tiny as tiny_4
 
 import fw_keyboard show Event
+import .ui_display_manager show DisplayManager
+
+TYP_10 ::= Font [typ_10.ASCII]
+TYP_18 ::= Font [typ_18.ASCII]
+TINY_4 ::= Font [tiny_4.ASCII]
+
+class Style:
+  color /int?
+  font /Font?
+  align /int?
+
+  constructor --.color=WHITE --.font=TYP_10 --.align=TEXT_TEXTURE_ALIGN_LEFT:
 
 /*
-Something that can be displayed: a (page, drawing), element or composite element
+Something that can be displayed: a page, an element or a layout.
 */
 interface Displayable:
+interface Eventable:
+// ----------------------------------------------------------------------------
 
-abstract class Layout implements Displayable:
-  elements /List := ?  // a list of figures, to be laid out
-  parent_ /Displayable? := null
+interface Locating extends Displayable:
+/*
+Layouts take on 3 forms (static, dynamic and freeform) to locate the page elements
+  on the display.  Layouts must be able to nest, are Displayable but have no visual indicator
+  other than the consequence of their presence in element location.
 
-  constructor .elements:
+Static layouts may comprise rows, columns, grids etc to place elements once at page creation
+  according to a layout algorithm.
 
-  abstract build tft/ColorTft --parent /Displayable-> none
-// Auto_once
+Dynamic layouts infers the elements are continuously moving, based on some algorithm.  So
+  in a drawing of planetary bodies, the planets are animated by the rules of gravity. 
+  (In HotDraw, this was achieved by subclassing Drawing, but here there is the opportunity to 
+  extract the behavior.)
+
+Freeform layouts, elements are placed explicitly, by hand (in an editor) or code.
+
+Is it tractable for a dynamic layout to wrap a freeform, so you could live edit a dynamic page?
+*/
+
+
+abstract class Layout implements Locating Eventable:
+  style_ /Style?
+  elements_ /List := ?  // a list of figures, to be laid out
+  parent_ /Eventable? := null
+
+  constructor --.style_=null .elements_:
+
+  abstract build parent/Eventable display/TrueColorPixelDisplay ctx/GraphicsContext-> none
+
+
 class Row extends Layout:
-  constructor elements:
-    super elements
+  x /int := 0
+  y /int := 0
 
-  build tft/PixelDisplay --parent /Displayable-> none:
+  constructor --style elements:
+    super --style_=style elements
+
+  build parent /Eventable display/TrueColorPixelDisplay ctx/GraphicsContext -> none :
     parent_ = parent
-    elements.do:
-      it.build tft this
+    // add any Row styling to the context here
+    elements_.do:
+      it.build this display ctx
+
+  advance x_inc /int y_inc /int -> none:
+    x = x + x_inc
+    y = y + y_inc
 
 class Column extends Layout:
 
-  constructor elements:
-    super elements
+  constructor --style elements:
+    super --style_=style elements
 
-  build tft/PixelDisplay --parent /Displayable-> none:
+  build parent /Eventable display/TrueColorPixelDisplay ctx/GraphicsContext -> none :
     parent_ = parent
-    elements.do:
-      it.build tft this
+    // add any Column styling to the context here
+    elements_.do:
+      it.build this display ctx
 
 // Auto_continuous
 //class Dynamic extends Layout:
@@ -54,17 +101,17 @@ class Column extends Layout:
 // Manual
 class Freeform extends Layout:
 
-  constructor elements:
-    super elements
+  constructor --style=null elements:
+    super --style_=style elements
 
-  // used by a drawing, do nothing, items placed explicitly
-  build tft/PixelDisplay --parent /Displayable -> none:
+  build parent/Eventable  display/TrueColorPixelDisplay ctx/GraphicsContext -> none :
     parent_ = parent
-    elements.do:
-      it.build tft parent
+    // add any Freeform styling to the context here
+    elements_.do:
+      it.build this display ctx
       
 // ----------------------------------------------------------------------------
-
+// A Story is a chain of Pages, where you can go forward and back only
 class Story:
   home  /Link? := null
   index /Link? := null
@@ -84,47 +131,34 @@ class Story:
   current_page -> Displayable:
     return index.cel
 
-class Page implements Displayable:
-  name /string := ?
-  layout :=null
+  next -> Displayable:
+    index = index.next
+    return index.cel
+  prev -> Displayable:
+    index = index.prev
+    return index.cel
+
+class Page implements Displayable Eventable:
+  name /string := ""
+  layout_ :=null
 
   /// Transient state.
-  parent := null
-
-  tft := null
-  asc_10 := null
-  txt_ctx := null  
-  btn_ctx := null
-
-  focus := null
-
+  parent_ /Eventable? := null
+  // focus := null
   constructor --.name:
-    focus = this
+//    focus = this
+/*
 
   add_handlers collection:
     handles.add_all collection
+*/
 
-  clear_all tft/PixelDisplay -> none:
-    tft.remove_all
-    tft.background = BLACK  
+  build parent/Eventable display/TrueColorPixelDisplay ctx/GraphicsContext -> none:
+    parent_ = parent
+    // add any Page styling to the context here
+    layout_.build this display ctx
 
-  set_style tft/PixelDisplay -> none:
-    // For now, single style per page
-    asc_10 = Font [typX11.ASCII]
-    txt_ctx = tft.context --landscape --color=WHITE --font=asc_10
-    btn_ctx = tft.context --landscape --color=(get_rgb 0x5f 0x5f 0xff)  
-
-  build display_mgr -> none:
-    parent = display_mgr
-    tft = parent.display
-
-    clear_all tft
-    set_style tft
-    layout.build tft this
-
-  draw -> none:
-    tft.draw
-
+/*
   handle event: 
     if (focus == this):
       handles.do: 
@@ -133,41 +167,44 @@ class Page implements Displayable:
           return
     else:
       focus.handle event
-
+*/
   layout a_layout -> none:
-    layout = a_layout
-
+    layout_ = a_layout
+/*
   navigate_to name/string -> none:
     parent.navigate_to name
 
   remove_texture texture -> none:
-    tft.remove texture
-
+    parent.display.remove texture
+*/
 // ----------------------------------------------------------------------------
 
+/*
+In Toit Display architecture, a display maintains a list of objects that it is 
+currently displaying, called Textures.  Textures are mutatable.  To update the
+display, you add/remove/modify the textures, then call `draw` on the display.
 
+A Story comprises Pages, that represent the individual screens of the UI 
+and their sequence. Within a Page, Elements are a wrapper for Textures, 
+to capture interactivity and animation.
+
+Story, Pages and Elements may be written in a textual format, derivative of 
+the concepts of Elm-UI, Flutter and HotDraw, but scoped for the limited displays of
+embedded devices.
+*/
 abstract class Element:
-  /// Defining properties of an element.
-  handles := List  // For now, handlers are in a List
-  model := null
-  /// Transient state.
-  parent := null
+  handles := List
+  model_ := null
+  // Transient state.
+  parent_ := null
 
   // abstract handle event/Event -> none
 
-
-abstract class CompositeElement extends Element:
-  elements := List
-  // nav_seq /Link := ?
-
-
-
-abstract class DisplayElement extends Element:
-  /// Defining properties of an element.
+abstract class DisplayElement extends Element implements Eventable:
   x/int
   y/int
-  /// Transient state.
-  texture := null
+  style /Style?
+  texture_ /Texture? := null
 
   /** Notes:  
   - The `.` between the `--` and arg-name, is a shortcut syntax to assign the values, with named args.
@@ -175,36 +212,49 @@ abstract class DisplayElement extends Element:
   - By supplying default values for x and y, the arguments are optional.
      This would be useful where there is a layout engine, rather than explicitly placing elements.
   */
-  constructor --.x=0 --.y=0:
+  constructor --.style=null --.x=0 --.y=0:
 
-  setTxt aStr/string -> none:
+abstract class CompositeElement extends DisplayElement:
+  elements := List
+  // nav_seq /Link := ?
 
 class Text extends DisplayElement:
   /// `txt` must be non-final, to allow editing.
   txt/string := ?
 
-  constructor --.txt --x=0 --y=0:
-    super --x=x --y=y
+  constructor --style --.txt --x=0 --y=0:
+    super --style=style --x=x --y=y
 
-  build tft -> none:
-    texture = tft.text (parent.txt_ctx.with --alignment=TEXT_TEXTURE_ALIGN_LEFT) x y txt
+  build parent/Displayable display/TrueColorPixelDisplay ctx/GraphicsContext -> none:
+    parent_ = parent
+    texture_ = display.text (ctx.with --color=style.color --font=style.font --alignment=style.align) x y txt
 
+  // Refer to `GraphicsContext.with` in pixel_display.toit !!!!
+  /*
+    if font_name_:
+
+    else:
+
+    texture_ = tft.text (parent.txt_ctx.with --alignment=TEXT_TEXTURE_ALIGN_LEFT) x y txt
+  */
+  /*
   changed -> none:
-    parent.remove_texture texture
-    build parent.tft
+    parent.remove_texture texture_
+    build parent.tft  // do we maintain enough info to rebuild?
     parent.draw
-
+*/
   set_text str/string -> none:
     txt = str
-    changed
+  //  changed
 
-  handle event -> none:
+  // handle event -> none:
+/*
+class Spacing:
 
-class Spacing extends Text:
+  space_ /int
 
-  constructor i/int:
-    super --txt=(" "*i)
-
+  constructor .space_ /int:
+  
 class Button extends Text:  // not used, ugly, to be replaced using Windows
   /// The `?` designates that the value will be set in the constructor.
   handler := ?
@@ -232,14 +282,14 @@ class Button extends Text:  // not used, ugly, to be replaced using Windows
 class NullElement extends Element:
 
   handle Event -> none: 
-
+*/
 /** ---
 A handler is a Command object, used since ["Blocks cannot be stored in instance fields"](https://docs.toit.io/language/blocks/).
 Handler respond to some event, by invoking a specific action on a target.
 The handlers have restricted value, but work for this toy demo.
 (In Smalltalk, you might store a block in an event target (with necessary foriegn references) that respond directly to the events).
 */
-
+/*
 class Handler:
   event/Event := ?
   action/Action := ?
@@ -272,7 +322,7 @@ class NavTo extends Action:
   
   invoke -> none:
     el.navigate_to id
-
+*/
 class Link:
   cel /Displayable
   prev /Link? := null

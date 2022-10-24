@@ -1,3 +1,6 @@
+#1.0.8 - 2022-10-23
+Demo UI renders, with text styling.
+
 # 1.0.7 - 2022-10-17
 Correct .yaml files and imports
 

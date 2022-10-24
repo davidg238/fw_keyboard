@@ -5,7 +5,7 @@ import fw_keyboard show *
 import .ui_display_manager show DisplayManager
 import .ui_event_manager show EventManager
 import .ui_elements show *
-import .ui_greenhouse show Greenhouse_Sim
+import .ui_view_tft show *
 import monitor show Channel
 
 import pixel_display.true_color show *
@@ -22,24 +22,18 @@ tscrn := null
 event_mgr := null
 display_mgr := null
 
-greenhouse := Greenhouse_Sim
+tft_ui := TFT_ui
 
 main:
 
   fwk.on
-  tft = fwk.tft
   kbd = fwk.keyboard
   tscrn = fwk.touchscreen
-  display_mgr = DisplayManager --display=tft
+  display_mgr = DisplayManager --display=fwk.tcpd --width=fwk.width --height=fwk.height
   event_mgr = EventManager --key=key_events --touch=touch_events --display_mgr=display_mgr
 
 
-  story := Story home
-  story.add pid
-  story.add history
-  story.add wifi
-
-    /// The keyboard dispatches events for the alphnumeric keys, 4 buttons, 5 way selector and touch screen.
+  /// The keyboard dispatches events for the alphnumeric keys, 4 buttons, 5 way selector and touch screen.
   task:: keyboard_task
 //    task:: touchscreen_task // todo
   task:: event_task
@@ -56,45 +50,9 @@ event_task:
 
 display_task:
 
-display_mgr.show story.current_page
+  display_mgr.show_story tft_ui.story
 
 
-home -> Page:
-  page := Page --name="Home"
-  page.layout (Column [
-    Text --txt="Greenhouse Control",
-  ])
-  return page
-
-pid -> Page:
-  page := Page --name="PID"
-  page.layout (Column [
-      PID --name="T1" --input=harpo --output=marco --sp=trudy
-    ])
-  return page
-
-history -> Page:
-  page := Page --name="T1 history"  
-  page.layout (Column [
-      Histogram --name="T1" --input=t1.history
-    ])
-  return page
-
-wifi -> Page:
-  page := Page --name="Home"
-  page.layout (Column [
-    Row [
-      Text --txt="Device ID:",
-      Spacing 2,
-      Text --txt=greenhouse.device_id
-    ],
-    Row [
-      Text --txt="Address",
-      Spacing 2,
-      Text --txt=greenhouse.network_address
-    ],      
-  ])
-  return page
 
 /** ----
 Declare some simple page content

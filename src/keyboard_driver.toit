@@ -18,12 +18,14 @@ class Keyboard_Driver:
   tft_device := null
   tft_driver := null
 
-  tft := null
+  tcpd := null
   keyboard := null
   touchscreen := null
   samd20  := null
   tsc2004 := null
     
+  width ::= 320
+  height ::= 240
   on:
     i2c_bus = i2c.Bus
        --sda=gpio.Pin 23
@@ -44,19 +46,19 @@ class Keyboard_Driver:
         --dc= gpio.Pin  33
         --frequency= 1_000_000 * 20 //(fails at 40)
 
-    tft_driver = ColorTft tft_device 320 240
+    tft_driver = ColorTft tft_device width height
             --reset=  null
             --backlight= null
             --x_offset= 0
             --y_offset= 0
             --flags= COLOR_TFT_16_BIT_MODE | COLOR_TFT_FLIP_XY
             --invert_colors= false
-    tft = TrueColorPixelDisplay tft_driver
+    tcpd = TrueColorPixelDisplay tft_driver
 
   off:
     samd20.close
     tsc2004.close
-    tft.close
+    tcpd.close
     tft_driver.close
 //    tft_device.close
 

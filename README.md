@@ -23,9 +23,7 @@ Plug the ESP32 feather into the back of the Featherwing Keyboard.
 | Stemma QT/Qwiic connector |  | N | (Untested)
 | GPIO solder jumpers  |  |N | 
 
-## ToDo
-- Is touchscreen fully robust?
-- Only minimal samples provided
+## Notes
+This version contains the first working version of a UI framework, drawing very loosely upon Elm-UI, Flutter and HotDraw.  Execute `jag run ui_demo.toit` to see. Review `ui_view_tft.toit` for a fragment of `tft.toit` recoded using the framework.  Sofar, only Text elements are implemented.
 
-name: fw_keyboard
-description: A library to enable use of the [Keyboard FeatherWing Rev 2](https://www.solder.party/docs/keyboard-featherwing/rev2/)
+

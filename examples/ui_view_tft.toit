@@ -6,8 +6,9 @@ import bitmap show *
 import color_tft show *
 import font.matthew_welch.tiny as tiny_4
 import font show *
-import font.x11_100dpi.sans.sans_10 as sans_10
-import font.x11_100dpi.sans.sans_24_bold as sans_24_bold
+
+
+
 import gpio
 import pixel_display show *
 import pixel_display.histogram show TrueColorHistogram
@@ -17,18 +18,46 @@ import spi
 
 import monitor show Channel
 import fw_keyboard show Keyboard_Driver BBQ10Keyboard R2_PRESS
+import .ui_elements show Story Page Displayable Freeform Style Text TYP_10 TYP_18 TINY_4
+
+class TFT_Model:
 
 
-run := true
+class TFT_ui:
 
+  tft_model := TFT_Model
+  story /Story? := null
+
+  constructor:
+    story = create_story_
+
+  homepage -> Displayable:
+    return story.homepage
+
+  create_story_ -> Story:
+    story = Story home
+    return story
+
+  home -> Page:
+    page := Page --name="Home"
+    page.layout (Freeform [
+                  Text --style=(Style --color=0xff_9f_9f) --txt="Red" --x=50 --y=50, // 0xff_ff_ff
+                  Text --style=(Style --font=TINY_4) --txt="!\"#\$%&/(){}=?+`,;.:-_^~01234567890" --x=20 --y=70,
+                  Text --style=(Style --font=TINY_4) --txt="abcdefghijklmnopqrstuvwxyz" --x=20 --y=78,
+                  Text --style=(Style --font=TINY_4) --txt="ABCDEFGHIJKLMNOPQRSTUVWXYZ" --x=20 --y=86,
+                  Text --style=(Style --font=TYP_18 --color=0x8f_ff_9f) --txt="Green" --x=50 --y=120,
+                ])
+    return page
+/*
 main:
+  run := true
 
   fw_kbd := Keyboard_Driver
   fw_kbd.on
-  tft := fw_kbd.tcpd
+  tft := fw_kbd.tft
   kbd := fw_kbd.keyboard
 
-  tft.background = get_rgb 0x12 0x03 0x25
+  tft.background = get_rgb 
   width := 320
   height := 240
   sans := Font [sans_10.ASCII]
@@ -69,8 +98,6 @@ main:
   tft.add barcode
 
   tft.draw
-
-  print "tft width : $tft.driver.width"
 
   sq_x := width > height ? 180 : 120
   sq_y := width > height ? 120 : 180
@@ -150,3 +177,4 @@ check_for_quit kbd/BBQ10Keyboard -> none:
     event := kbd.read_fifo
     if event==R2_PRESS:
       run = false
+*/

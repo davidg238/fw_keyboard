@@ -18,7 +18,7 @@ class EventManager:
       while true:
         event = key.receive
         // print event
-        display_mgr.handle event
+        // display_mgr.handle event
 
 
 
