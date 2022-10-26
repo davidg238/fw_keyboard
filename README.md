@@ -28,8 +28,8 @@ Plug the ESP32 feather into the back of the Featherwing Keyboard.
 In /examples, execute `jag run ui_demo.toit` to see.  
 Review `ui_view_tft.toit` for a fragment of `tft.toit` recoded using the framework.  Sofar, only Text elements are implemented.  
 
-2. A simple tank simulation and control is available in `tank_ioctl.toit` and presented as a service.  
+2. A simple tank simulation and PID control is available in `tank_ioctl.toit` and presented as a service, installed with `jag container install ioctl tank_ioctl.toit`.   
 Execute `jag run tank_ui.toit` and view `jag monitor`, to see the tank level/setpoint/control output printed.  
-The level update runs every 5 seconds, so be patient.
+The level simulation is updated every 6 seconds, the PID runs every 2.
 
 
