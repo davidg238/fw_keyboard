@@ -30,6 +30,8 @@ Review `ui_view_tft.toit` for a fragment of `tft.toit` recoded using the framewo
 
 2. A simple tank simulation and PID control is available in `tank_ioctl.toit` and presented as a service, installed with `jag container install ioctl tank_ioctl.toit`.   
 Execute `jag run tank_ui.toit` and view `jag monitor`, to see the tank level/setpoint/control output printed.  
-The level simulation is updated every 6 seconds, the PID runs every 2.
+The level simulation is updated every 6 seconds, the PID runs every 2.  
+The UI notifies every 1 second via a resource notification, printing to the console e.g. `lvl: 21.1 sp: 25 out: 78`.  
+Note, the `tank_ui.toit` example does not require a FW_Keyboard.
 
 

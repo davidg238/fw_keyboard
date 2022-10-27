@@ -8,6 +8,10 @@ import .ui_elements show *
 import .ui_view_tft show *
 import monitor show Channel
 
+import .tank_ui show *
+import .tank_ioctl show PIDServiceClient
+
+
 import pixel_display.true_color show *
 
 class Launcher:
@@ -23,6 +27,10 @@ event_mgr := null
 display_mgr := null
 
 tft_ui := TFT_ui
+
+pid_in := PIDServiceClient
+pid_out := pid_in.create_faceplate
+// tank_ui := Tank_UI pid_in pid_out
 
 main:
 
@@ -50,7 +58,9 @@ event_task:
 
 display_task:
 
+
   display_mgr.show_story tft_ui.story
+//  display_mgr.show_story tank_ui.story
 
 
 

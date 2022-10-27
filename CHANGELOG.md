@@ -1,3 +1,6 @@
+#1.0.11 - 2022-10-26
+Service infrastructure working
+
 #1.0.10 - 2022-10-25
 Fix README
 
