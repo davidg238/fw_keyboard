@@ -1,41 +1,62 @@
+sdk: ^2.0.0-alpha.146
 prefixes:
   color_tft: toit-color-tft
+  font_tiny: pkg-font-tiny
   font_x11_adobe: pkg-font-x11-adobe
   fw_keyboard: ..
-  pid: pid
+  host: pkg-host
   pixel_display: toit-pixel-display
-  pixel_strip: toit-pixel-strip
-  solar_position: toit-solar-position
+  png_display: toit-png-display
+  roboto: toit-font-google-100dpi-roboto
 packages:
   ..:
     path: ..
     prefixes:
       color_tft: toit-color-tft
       pixel_display: toit-pixel-display
-      pixel_strip: toit-pixel-strip
-  pid:
-    url: github.com/andersjohnsen/pid
-    version: 1.0.1
-    hash: ccc542c1d0df544c2e6dfa58efa0bd225698dde4
+  pkg-font-tiny:
+    url: github.com/toitlang/pkg-font-tiny
+    name: font_tiny
+    version: 0.1.0
+    hash: 1506cad47ee738f8a9145885abb5fa0be918b2b5
   pkg-font-x11-adobe:
     url: github.com/toitlang/pkg-font-x11-adobe
+    name: font_x11_adobe
     version: 0.1.0
     hash: f844400722165252148f087cdf189abab0a47f3d
+  pkg-host:
+    url: github.com/toitlang/pkg-host
+    name: host
+    version: 1.15.3
+    hash: 62393e8522b77eafbafe60b9817935266117daf6
   toit-color-tft:
     url: github.com/toitware/toit-color-tft
-    version: 1.3.0
-    hash: 485c03596df840ec16b3e198736f044785d7e145
+    name: color_tft
+    version: 2.1.0
+    hash: 8ae2796488705df1fc63c21a3ff435c942de6935
     prefixes:
       pixel_display: toit-pixel-display
+  toit-font-google-100dpi-roboto:
+    url: github.com/toitware/toit-font-google-100dpi-roboto
+    name: roboto
+    version: 1.3.0
+    hash: 833bf8b95938537c761e122026b6e62b03cb0762
   toit-pixel-display:
     url: github.com/toitware/toit-pixel-display
-    version: 1.6.0
-    hash: 39de82f680e27961e39ca24ba94520f21759370c
-  toit-pixel-strip:
-    url: github.com/toitware/toit-pixel-strip
-    version: 0.2.0
-    hash: 72c721c7f0929e6ed8502a2384924e853d9cd583
-  toit-solar-position:
-    url: github.com/toitware/toit-solar-position
-    version: 0.0.3
-    hash: 82c796ae33d0fc7448f0beb4e485485d093e4e29
+    name: pixel_display
+    version: 2.9.0
+    hash: 0afbfb5934efbb037c7a58c18a94bb0c1b1ab4c8
+    prefixes:
+      png-tools: toit-png-tools
+  toit-png-display:
+    url: github.com/toitware/toit-png-display
+    name: png_display
+    version: 1.0.1
+    hash: c9a6ff7db06d1d284dfb23756731f4144e1fdd64
+    prefixes:
+      pixel_display: toit-pixel-display
+  toit-png-tools:
+    url: github.com/toitware/toit-png-tools
+    name: png-tools
+    version: 1.0.0
+    hash: ee472ac9d4333a138206f9d3a817d3c5432d6f87

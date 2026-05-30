@@ -17,8 +17,8 @@ Plug the ESP32 feather into the back of the Featherwing Keyboard.
 | QWERTY keyboard | Y | | 
 | 5-way button | Y | | 
 | 4 soft tactile buttons | Y | | 
-| Neopixel  |  |N | ToDo ... integrate Pixel_Strip
-| Ambient Light Sensor | |N | Toit does not support ESP32 Feather pin 26 as AI
+| Neopixel  |  |N | GPIO 11 is not available for the NeoPixel, refer Links 4.
+| Ambient Light Sensor | |N | GPIO 26 as AI is not supported, refer Links 4.
 | microSD connector |  |N | 
 | Stemma QT/Qwiic connector |  | N | (Untested)
 | GPIO solder jumpers  |  |N | 
@@ -35,3 +35,8 @@ The UI notifies every 1 second via a resource notification, printing to the cons
 Note, the `tank_ui.toit` example does not require a FW_Keyboard.
 
 
+## Links
+1. [Cassowary](https://constraints.cs.washington.edu/cassowary/)
+2. [box-drawing](https://github.com/adobe-type-tools/box-drawing/blob/master/boxDrawing.py)
+3. [SVG Transformation](https://jenkov.com/tutorials/svg/svg-transformation.html)
+4. [ESP32 Pins](https://docs.google.com/spreadsheets/d/12qL3ui2BkSn91O0ISJU8QIL2mcG-r_vlX0briknA2QQ)

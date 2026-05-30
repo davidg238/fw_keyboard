@@ -7,15 +7,15 @@
 - [Making 2D Hilbert Curve](https://bioconductor.org/packages/devel/bioc/vignettes/HilbertCurve/inst/doc/HilbertCurve.html)
 */
 
-import fw_keyboard show Keyboard_Driver BBQ10Keyboard KEY_L1 KEY_L2 KEY_R1 KEY_R2 R2_PRESS KeyEvent
+import fw_keyboard show  * //Keyboard_Driver BBQ10Keyboard KEY_L1 KEY_L2 KEY_R1 KEY_R2 KeyEvent
 
 import font show *
 import pixel_display show *
-import pixel_display.texture show TEXT_TEXTURE_ALIGN_RIGHT TEXT_TEXTURE_ALIGN_CENTER
+// import pixel_display.texture show TEXT_TEXTURE_ALIGN_RIGHT TEXT_TEXTURE_ALIGN_CENTER
 import pixel_display.true_color show WHITE BLACK get_rgb
 import font show *
-import font.matthew_welch.tiny as tiny_4
-import font.x11_100dpi.sans.sans_10 as sans_10
+import font_tiny.tiny as tiny
+import font-x11-adobe.sans-10 as sans-10
 
 import math show pow Point3f
 
@@ -28,33 +28,33 @@ hilbert1 := [
 
 run := true
 
+TINY := Font [tiny.ASCII]
+SANS := Font [sans_10.ASCII]
+
 main:
 
+  found := catch --trace:
     fw_kbd := Keyboard_Driver
     fw_kbd.on
-    tft := fw_kbd.tft
+    tft := fw_kbd.display
     kbd := fw_kbd.keyboard
 
-    tiny := Font [tiny_4.ASCII]
-    sans := Font [sans_10.ASCII]
-    tiny_context := tft.context --landscape --color=WHITE --font=tiny
-    context      := tft.context --landscape --color=WHITE --font=sans --alignment=TEXT_TEXTURE_ALIGN_CENTER
-
-    popup_msg tft context "Function keys = Hilbert Curves, order 1-4"
+    popup_msg tft "Function keys = Hilbert Curves, order 1-4"
     
     order := 4
     while run:
-        if not (order < 1): draw_hilbert order tft context tiny_context
+        if not (order < 1): draw_hilbert order tft 
         order = get_order kbd
+
+    popup_msg tft "That's all folks ...."
     fw_kbd.off
-    print " ... hilbert end"
     // sleep --ms=1000
 
-
-popup_msg tft context a_string/string -> none:
+popup_msg tft a_string/string -> none:
     clear_screen tft
     
-    tft.text context 160 120 a_string
+    text := Label --x=160 --y=120 --text=a_string --font=SANS
+    tft.add text
     tft.draw
     sleep --ms=2000
     clear_screen tft
@@ -66,20 +66,20 @@ get_order kbd/BBQ10Keyboard -> int:
             event := kbd.read_fifo
             if event is KeyEvent: 
                 k_event := event as KeyEvent
-                if k_event==R2_PRESS:
+                // print k_event
+                if k_event==U5_PRESS:
                         run = false
                         return -1
-                if k_event.state==1:
-                    if      k_event.key==119: return 1
-                    else if k_event.key==101: return 2
-                    else if k_event.key==114: return 3
-                    else if k_event.key==115: return 4
+                else if k_event==L1_PRESS: return 1
+                else if k_event==L2_PRESS: return 2
+                else if k_event==R1_PRESS: return 3
+                else if k_event==R2_PRESS: return 4
                 return -1
     return -1
 
 
 
-draw_hilbert order/int tft context tiny_context-> none:
+draw_hilbert order/int tft -> none:
 
     // Anything greater than order 4, program watchdogs.
 
@@ -91,18 +91,21 @@ draw_hilbert order/int tft context tiny_context-> none:
     offset := Point3f (length / 2).to_int (length / 2).to_int 0
     segment := null
 
-    popup_msg tft context "Order $(order) Hilbert Curve, has $(num_points) points"
+    popup_msg tft "Order $(order) Hilbert Curve, has $(num_points) points"
 
     prev := ((Point3f 0 0 0) * length) + offset
     count := 0
+    label := null
+
     for i := 0; i < num_points; i += 1:
         count++
         curr := hilbert i order
         curr = (curr * length) + offset // scale it to the screen
         if order < 4:  // at order 4, too many screen entities, draw fails
-            tft.text tiny_context (curr.x).to_int (curr.y).to_int i.stringify  // to see the numbered curve points
+            label = Label --x=(curr.x).to_int --y=(curr.y).to_int --text=i.stringify --font=TINY
+            tft.add label // to see the numbered curve points
 
-        segment = tft.line context prev.x.to_int prev.y.to_int curr.x.to_int curr.y.to_int
+        segment = tft.line prev.x.to_int prev.y.to_int curr.x.to_int curr.y.to_int
         tft.add segment
         tft.draw       // to draw incrementally 
         prev = curr

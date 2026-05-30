@@ -1,69 +1,76 @@
 // Copyright 2021,2022 Ekorau LLC
 
 import gpio
-import serial.protocols.i2c as i2c
+import i2c
 import spi
 
-import color_tft show ColorTft COLOR_TFT_16_BIT_MODE COLOR_TFT_FLIP_XY
-import pixel_display show TrueColorPixelDisplay
+import color-tft show *
+import pixel-display show *
 import .bbq10keyboard show BBQ10Keyboard 
-import .touch_controller show TouchController 
+import .touch-controller show TouchController 
+import .util
+
 import monitor
 
 
-class Keyboard_Driver:
+class Keyboard-Driver implements Display:
 
-  i2c_bus := null
-  spi_bus := null
-  tft_device := null
-  tft_driver := null
-
-  tcpd := null
-  keyboard := null
-  touchscreen := null
-  samd20  := null
-  tsc2004 := null
-    
+  tft := null
   width ::= 320
   height ::= 240
+
+  keyboard := null
+  touchscreen := null
+
+
+  i2c-bus_ := null
+  spi-bus_ := null
+  tft-device_ := null
+  tft-driver_ := null
+  samd20_  := null
+  tsc2004_ := null
+    
   on:
-    i2c_bus = i2c.Bus
+    i2c-bus_ = i2c.Bus
        --sda=gpio.Pin 23
        --scl=gpio.Pin 22
-    samd20  = i2c_bus.device 0x1F
-    tsc2004 = i2c_bus.device 0x4B
-    keyboard = BBQ10Keyboard samd20
+    samd20_  = i2c-bus_.device 0x1F
+    tsc2004_ = i2c-bus_.device 0x4B
+    keyboard = BBQ10Keyboard samd20_
     keyboard.reset
-    touchscreen = TouchController tsc2004
+    touchscreen = TouchController tsc2004_
     touchscreen.initialize
 
-    spi_bus = spi.Bus
+    spi-bus_ = spi.Bus
         --mosi= gpio.Pin  18 
         --clock= gpio.Pin  5
 
-    tft_device = spi_bus.device
+    tft-device_ = spi-bus_.device
         --cs= gpio.Pin  15 
         --dc= gpio.Pin  33
         --frequency= 1_000_000 * 20 //(fails at 40)
 
-    tft_driver = ColorTft tft_device width height
+    tft-driver_ = ColorTft tft-device_ width height
             --reset=  null
             --backlight= null
-            --x_offset= 0
-            --y_offset= 0
-            --flags= COLOR_TFT_16_BIT_MODE | COLOR_TFT_FLIP_XY
-            --invert_colors= false
-    tcpd = TrueColorPixelDisplay tft_driver
+            --x-offset= 0
+            --y-offset= 0
+            --flags= COLOR-TFT-16-BIT-MODE | COLOR-TFT-FLIP-XY
+            --invert-colors= false
+    tft = PixelDisplay.true-color tft-driver_
+
+  display -> PixelDisplay:
+    return tft
 
   off:
-    samd20.close
-    tsc2004.close
-    tcpd.close
-    tft_driver.close
-//    tft_device.close
+    samd20_.close
+    tsc2004_.close
+    tft.close
+    tft-driver_.close
+//    tft_device_.close
 
-//    i2c_bus.close 
-//    spi_bus.close
+//    i2c_bus_.close 
+//    spi_bus_.close
 
 
 /*

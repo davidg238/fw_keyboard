@@ -5,41 +5,45 @@ import gpio.adc as adc
 import encoding.json
 import gpio
 
-import fw_keyboard show Keyboard_Driver
+import fw-keyboard show Keyboard-Driver
 
 import monitor show *
 
 import font show *
-import pixel_display show *
-import pixel_display.texture show TEXT_TEXTURE_ALIGN_RIGHT TEXT_TEXTURE_ALIGN_CENTER
-import pixel_display.true_color show BLACK get_rgb
+import font-x11-adobe.sans-14-bold as sans-14
+import font-x11-adobe.sans-24-bold as sans-24-bold
 
-lcd := null
+import pixel_display show *
+import pixel_display.two-color show *
+
+
+SANS := Font [sans-14.ASCII]
+SANS-BIG := Font [sans-24-bold.ASCII]
 
 main:
 
   print "Starting display test..."
 
   sans_ ::= Font.get "sans10"
-  fw_kbd := Keyboard_Driver
+  fw-kbd := Keyboard-Driver
 
-  fw_kbd.on
+  fw-kbd.on
   print "fw_kbd.on ... done"
   
-  lcd = fw_kbd.tft
-  kbd := fw_kbd.keyboard
+  tft := fw-kbd.tft
+  kbd := fw-kbd.keyboard
 
-  context := lcd.context --font=sans_  --color=(get_rgb 230 230 50)
+  sans-36 := Style
+    --font = SANS-BIG
+    --color = 0x32ff32
+    --align-center
 
-  lcd.background = BLACK
-  blank
-  lcd.text context 60 60 "Hello World"
-  kbd.backlight false
-  kbd.backlight2 false
-  lcd.draw
+  tft.background = BLACK
+  [
+    Label  --style=sans-36 --x=160 --y=30 --text="Hello from",
+    Label  --style=sans-36 --x=160 --y=65 --text="TOITWARE",
+  ].do: tft.add it
   
-  print "... done"
+  tft.draw
 
-blank:
-  lcd.remove_all
-  lcd.draw
+  print "... done"

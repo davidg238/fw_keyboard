@@ -2,7 +2,9 @@
 
 import .bbq10keyboard
 import .events
-import .keyboard_driver
-import .touch_controller
+import .keyboard-driver
+import .touch-controller
+
+import .util
 
 export *
