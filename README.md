@@ -17,26 +17,31 @@ Plug the ESP32 feather into the back of the Featherwing Keyboard.
 | QWERTY keyboard | Y | | 
 | 5-way button | Y | | 
 | 4 soft tactile buttons | Y | | 
-| Neopixel  |  |N | GPIO 11 is not available for the NeoPixel, refer Links 4.
-| Ambient Light Sensor | |N | GPIO 26 as AI is not supported, refer Links 4.
+| Neopixel  |  |N | GPIO 11 is not available for the NeoPixel, refer Links 1.
+| Ambient Light Sensor | |N | GPIO 26 as AI is not supported, refer Links 1.
 | microSD connector |  |N | 
 | Stemma QT/Qwiic connector |  | N | (Untested)
 | GPIO solder jumpers  |  |N | 
 
-## Notes
-1. This version contains the first working version of a UI framework, drawing very loosely upon Elm-UI, Flutter and HotDraw.  
-In /examples, execute `jag run ui_demo.toit` to see.  
-Review `ui_view_tft.toit` for a fragment of `tft.toit` recoded using the framework.  Sofar, only Text elements are implemented.  
+## Examples
 
-2. A simple tank simulation and PID control is available in `tank_ioctl.toit` and presented as a service, installed with `jag container install ioctl tank_ioctl.toit`.   
-Execute `jag run tank_ui.toit` and view `jag monitor`, to see the tank level/setpoint/control output printed.  
-The level simulation is updated every 6 seconds, the PID runs every 2.  
-The UI notifies every 1 second via a resource notification, printing to the console e.g. `lvl: 21.1 sp: 25 out: 78`.  
-Note, the `tank_ui.toit` example does not require a FW_Keyboard.
+Run any of these with `jag run <file>` from the `examples/` directory:
 
+- `a_keyboard.toit` — prints key events as you press them.
+- `a_text_input.toit` — live text entry: type a line (Shift, Sym, Backspace and Enter all work), echoed to the TFT and the console.
+- `a_hilbert.toit` — draws Hilbert curves; the four side buttons select the order.
+- `a_touchscreen.toit` — prints raw touch events.
+
+## Keyboard text input
+
+Shift and Sym are applied by the keyboard firmware, so a printable key's decoded value is already the resulting character. `KeyboardInput` wraps the keyboard:
+
+- `read-key` blocks for the next decoded key press.
+- `keys-to channel` streams decoded presses to a channel.
+- `read-line` accumulates a line (Backspace edits, Enter returns), with an optional `--on-change` block for echoing to a display.
 
 ## Links
-1. [Cassowary](https://constraints.cs.washington.edu/cassowary/)
-2. [box-drawing](https://github.com/adobe-type-tools/box-drawing/blob/master/boxDrawing.py)
-3. [SVG Transformation](https://jenkov.com/tutorials/svg/svg-transformation.html)
-4. [ESP32 Pins](https://docs.google.com/spreadsheets/d/12qL3ui2BkSn91O0ISJU8QIL2mcG-r_vlX0briknA2QQ)
+1. [ESP32 Pins](https://docs.google.com/spreadsheets/d/12qL3ui2BkSn91O0ISJU8QIL2mcG-r_vlX0briknA2QQ)
+2. [Cassowary](https://constraints.cs.washington.edu/cassowary/)
+3. [box-drawing](https://github.com/adobe-type-tools/box-drawing/blob/master/boxDrawing.py)
+4. [SVG Transformation](https://jenkov.com/tutorials/svg/svg-transformation.html)
