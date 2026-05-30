@@ -3,6 +3,7 @@
 import .bbq10keyboard
 import .events
 import .keyboard-driver
+import .keyboard-input
 import .touch-controller
 
 import .util
